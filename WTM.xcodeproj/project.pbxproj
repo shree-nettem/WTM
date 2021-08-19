@@ -1,0 +1,1082 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0007D05CA4D25AB8E8221F96 /* Pods_WTM.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6EB81C009E425C7E93A9E1A3 /* Pods_WTM.framework */; };
+		0EF061A59E469AC271A4A0CA /* Pods_WTMTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4EAB2448A8C5CA9AF523450 /* Pods_WTMTests.framework */; };
+		345B9DD91CAC6AD6499010B2 /* Pods_WTM_WTMUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 45062B2D8A4C0B678719BB4E /* Pods_WTM_WTMUITests.framework */; };
+		444244D125738D8F001AC495 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444244D025738D8F001AC495 /* AppDelegate.swift */; };
+		444244D325738D8F001AC495 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444244D225738D8F001AC495 /* SceneDelegate.swift */; };
+		444244D525738D8F001AC495 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444244D425738D8F001AC495 /* ViewController.swift */; };
+		444244D825738D8F001AC495 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444244D625738D8F001AC495 /* Main.storyboard */; };
+		444244DA25738D93001AC495 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 444244D925738D93001AC495 /* Assets.xcassets */; };
+		444244DD25738D93001AC495 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 444244DB25738D93001AC495 /* LaunchScreen.storyboard */; };
+		444244E825738D93001AC495 /* WTMTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444244E725738D93001AC495 /* WTMTests.swift */; };
+		444244F325738D93001AC495 /* WTMUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444244F225738D93001AC495 /* WTMUITests.swift */; };
+		4442452B2573A0E4001AC495 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4442452A2573A0E4001AC495 /* LoginVC.swift */; };
+		44438D6525BFA928007D9F6C /* AddAgentVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44438D6425BFA928007D9F6C /* AddAgentVC.swift */; };
+		447169F625B27F5C00298B59 /* EnterPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447169F525B27F5C00298B59 /* EnterPinVC.swift */; };
+		447169FB25B27F7300298B59 /* ConfirmPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447169FA25B27F7300298B59 /* ConfirmPinVC.swift */; };
+		44716A0025B28F7000298B59 /* OTPTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447169FF25B28F7000298B59 /* OTPTextField.swift */; };
+		44716A0525B28FBE00298B59 /* OTPStackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44716A0425B28FBE00298B59 /* OTPStackView.swift */; };
+		44716A0E25B2A64D00298B59 /* LoginWithPinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44716A0D25B2A64D00298B59 /* LoginWithPinVC.swift */; };
+		44723ECE25931E1F00504EBA /* AdminAllTaxiListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44723ECD25931E1F00504EBA /* AdminAllTaxiListVC.swift */; };
+		44723ED325931EEC00504EBA /* AdminTaxiListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44723ED225931EEC00504EBA /* AdminTaxiListCell.swift */; };
+		4478EF5B2585E6A8005D74ED /* TicketCheckVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478EF5A2585E6A8005D74ED /* TicketCheckVC.swift */; };
+		4478EF632585ED7F005D74ED /* TicketScanVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4478EF622585ED7F005D74ED /* TicketScanVC.swift */; };
+		447B0B9E257B3B9D0083A472 /* AdminDashboardTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447B0B9D257B3B9D0083A472 /* AdminDashboardTblCell.swift */; };
+		447B0BA3257B3C550083A472 /* AdminAddTaxiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 447B0BA2257B3C550083A472 /* AdminAddTaxiVC.swift */; };
+		4484C83F25790A1C0000106A /* AgentBookingHeaderCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4484C83E25790A1C0000106A /* AgentBookingHeaderCell.swift */; };
+		448603BB25F464E4002A78A8 /* AdminBookTicketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 448603BA25F464E3002A78A8 /* AdminBookTicketVC.swift */; };
+		4488359C25A8334700D56915 /* EditTicketTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4488359B25A8334600D56915 /* EditTicketTimeVC.swift */; };
+		44886ECE25AAAC02001775D2 /* AgentInfoEditVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44886ECD25AAAC02001775D2 /* AgentInfoEditVC.swift */; };
+		44BE04AE268AA9C7008CC401 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44BE04AD268AA9C7008CC401 /* DatabaseManager.swift */; };
+		44C2E6692699C09C00E3F077 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C2E6682699C09B00E3F077 /* Network.swift */; };
+		44D6274D2575048200E38168 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D627482575048200E38168 /* Constant.swift */; };
+		44D6274E2575048200E38168 /* CurrentUserInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D627492575048200E38168 /* CurrentUserInfo.swift */; };
+		44D6274F2575048200E38168 /* Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6274A2575048200E38168 /* Utility.swift */; };
+		44D627692575049D00E38168 /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627562575049C00E38168 /* Montserrat-LightItalic.ttf */; };
+		44D6276A2575049D00E38168 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627572575049C00E38168 /* Montserrat-Medium.ttf */; };
+		44D6276B2575049D00E38168 /* Montserrat-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627582575049C00E38168 /* Montserrat-BoldItalic.ttf */; };
+		44D6276C2575049D00E38168 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627592575049C00E38168 /* Montserrat-Light.ttf */; };
+		44D6276D2575049D00E38168 /* Montserrat-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275A2575049C00E38168 /* Montserrat-ThinItalic.ttf */; };
+		44D6276E2575049D00E38168 /* Montserrat-ExtraLight.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275B2575049C00E38168 /* Montserrat-ExtraLight.ttf */; };
+		44D6276F2575049D00E38168 /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275C2575049C00E38168 /* Montserrat-Thin.ttf */; };
+		44D627702575049D00E38168 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275D2575049C00E38168 /* Montserrat-Bold.ttf */; };
+		44D627712575049D00E38168 /* Montserrat-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275E2575049C00E38168 /* Montserrat-MediumItalic.ttf */; };
+		44D627722575049D00E38168 /* Montserrat-BlackItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D6275F2575049C00E38168 /* Montserrat-BlackItalic.ttf */; };
+		44D627732575049D00E38168 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627602575049C00E38168 /* Montserrat-SemiBold.ttf */; };
+		44D627742575049D00E38168 /* Montserrat-ExtraLightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627612575049C00E38168 /* Montserrat-ExtraLightItalic.ttf */; };
+		44D627752575049D00E38168 /* Montserrat-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627622575049C00E38168 /* Montserrat-ExtraBold.ttf */; };
+		44D627762575049D00E38168 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = 44D627632575049C00E38168 /* OFL.txt */; };
+		44D627772575049D00E38168 /* Montserrat-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627642575049C00E38168 /* Montserrat-Black.ttf */; };
+		44D627782575049D00E38168 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627652575049C00E38168 /* Montserrat-Regular.ttf */; };
+		44D627792575049D00E38168 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627662575049C00E38168 /* Montserrat-Italic.ttf */; };
+		44D6277A2575049D00E38168 /* Montserrat-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627672575049C00E38168 /* Montserrat-SemiBoldItalic.ttf */; };
+		44D6277B2575049D00E38168 /* Montserrat-ExtraBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 44D627682575049C00E38168 /* Montserrat-ExtraBoldItalic.ttf */; };
+		44D6278625750E3E00E38168 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6278525750E3E00E38168 /* RegisterVC.swift */; };
+		44D6278B25750E5000E38168 /* ForgotPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6278A25750E5000E38168 /* ForgotPasswordVC.swift */; };
+		44D6279025750E6500E38168 /* AgentDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6278F25750E6500E38168 /* AgentDashboardVC.swift */; };
+		44D6279525750E8900E38168 /* AgentBookingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6279425750E8900E38168 /* AgentBookingVC.swift */; };
+		44D6279B257521B900E38168 /* AgentBookingTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D6279A257521B900E38168 /* AgentBookingTblCell.swift */; };
+		44D9125B25766E0000EBF185 /* BookingConfirmationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D9125A25766E0000EBF185 /* BookingConfirmationVC.swift */; };
+		44D9126025767E9900EBF185 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 44D9125F25767E9900EBF185 /* GoogleService-Info.plist */; };
+		44D912682576877800EBF185 /* AdminDashboardVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44D912672576877800EBF185 /* AdminDashboardVC.swift */; };
+		44DE359A2588C32600B6B7B5 /* AdminTicketListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE35992588C32600B6B7B5 /* AdminTicketListVC.swift */; };
+		44DE359F2588C3A900B6B7B5 /* AdminTicketListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44DE359E2588C3A900B6B7B5 /* AdminTicketListCell.swift */; };
+		44E5DA3325A0048E000E3C1E /* DeleteTaxiVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E5DA3225A0048E000E3C1E /* DeleteTaxiVC.swift */; };
+		44E5DA3825A007CE000E3C1E /* DeleteTaxiCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E5DA3725A007CE000E3C1E /* DeleteTaxiCell.swift */; };
+		44E5DA3D25A07828000E3C1E /* AgentEditTicketVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E5DA3C25A07828000E3C1E /* AgentEditTicketVC.swift */; };
+		44EB536E2591BFE700709EA8 /* SideMenuVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB536D2591BFE700709EA8 /* SideMenuVC.swift */; };
+		44EB53732591C16100709EA8 /* SideMenuTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB53722591C16100709EA8 /* SideMenuTblCell.swift */; };
+		44EB53A02591D17E00709EA8 /* AddTaxiStartTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB539F2591D17E00709EA8 /* AddTaxiStartTimeCell.swift */; };
+		44EB53A52591D19400709EA8 /* AddTaxiReturnTimeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44EB53A42591D19400709EA8 /* AddTaxiReturnTimeCell.swift */; };
+		44F7012925A1B829004932A1 /* PastTicketListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7012825A1B829004932A1 /* PastTicketListVC.swift */; };
+		44F766BB2594A72100AFE3DF /* LoadingUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F766BA2594A72100AFE3DF /* LoadingUserVC.swift */; };
+		44F7679825982E0100AFE3DF /* AgentRequestVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7679725982E0100AFE3DF /* AgentRequestVC.swift */; };
+		44F7679D25982E1300AFE3DF /* AgentListVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F7679C25982E1300AFE3DF /* AgentListVC.swift */; };
+		44F767A22598448100AFE3DF /* AgentListTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F767A12598448100AFE3DF /* AgentListTblCell.swift */; };
+		44F767A725985CF000AFE3DF /* AgentRequestTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F767A625985CEF00AFE3DF /* AgentRequestTblCell.swift */; };
+		44FB52802587AE460097146F /* TicketScannedDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB527F2587AE460097146F /* TicketScannedDetailVC.swift */; };
+		44FB9C5F257F246C00AAC880 /* AgentBookingReturnTimeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB9C5E257F246C00AAC880 /* AgentBookingReturnTimeVC.swift */; };
+		44FB9C64257F259600AAC880 /* AgentBookingReturnTblCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FB9C63257F259600AAC880 /* AgentBookingReturnTblCell.swift */; };
+		44FCB80B25AC46C500E3C883 /* SendMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FCB80A25AC46C500E3C883 /* SendMessageVC.swift */; };
+		44FCB81025AC4B4D00E3C883 /* ViewMessageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44FCB80F25AC4B4D00E3C883 /* ViewMessageVC.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		444244E425738D93001AC495 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 444244C525738D8F001AC495 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 444244CC25738D8F001AC495;
+			remoteInfo = WTM;
+		};
+		444244EF25738D93001AC495 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 444244C525738D8F001AC495 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 444244CC25738D8F001AC495;
+			remoteInfo = WTM;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		389FB2D76C39965F2EE036DB /* Pods-WTM.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTM.release.xcconfig"; path = "Target Support Files/Pods-WTM/Pods-WTM.release.xcconfig"; sourceTree = "<group>"; };
+		444244CD25738D8F001AC495 /* WTM.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WTM.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		444244D025738D8F001AC495 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		444244D225738D8F001AC495 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		444244D425738D8F001AC495 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		444244D725738D8F001AC495 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		444244D925738D93001AC495 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		444244DC25738D93001AC495 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		444244DE25738D93001AC495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		444244E325738D93001AC495 /* WTMTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WTMTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		444244E725738D93001AC495 /* WTMTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WTMTests.swift; sourceTree = "<group>"; };
+		444244E925738D93001AC495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		444244EE25738D93001AC495 /* WTMUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WTMUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		444244F225738D93001AC495 /* WTMUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WTMUITests.swift; sourceTree = "<group>"; };
+		444244F425738D93001AC495 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		4442452A2573A0E4001AC495 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		44438D6425BFA928007D9F6C /* AddAgentVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddAgentVC.swift; sourceTree = "<group>"; };
+		447169F525B27F5C00298B59 /* EnterPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnterPinVC.swift; sourceTree = "<group>"; };
+		447169FA25B27F7300298B59 /* ConfirmPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmPinVC.swift; sourceTree = "<group>"; };
+		447169FF25B28F7000298B59 /* OTPTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPTextField.swift; sourceTree = "<group>"; };
+		44716A0425B28FBE00298B59 /* OTPStackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPStackView.swift; sourceTree = "<group>"; };
+		44716A0D25B2A64D00298B59 /* LoginWithPinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginWithPinVC.swift; sourceTree = "<group>"; };
+		44723ECD25931E1F00504EBA /* AdminAllTaxiListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAllTaxiListVC.swift; sourceTree = "<group>"; };
+		44723ED225931EEC00504EBA /* AdminTaxiListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTaxiListCell.swift; sourceTree = "<group>"; };
+		4478EF5A2585E6A8005D74ED /* TicketCheckVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketCheckVC.swift; sourceTree = "<group>"; };
+		4478EF622585ED7F005D74ED /* TicketScanVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScanVC.swift; sourceTree = "<group>"; };
+		447B0B9D257B3B9D0083A472 /* AdminDashboardTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardTblCell.swift; sourceTree = "<group>"; };
+		447B0BA2257B3C550083A472 /* AdminAddTaxiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminAddTaxiVC.swift; sourceTree = "<group>"; };
+		4484C83E25790A1C0000106A /* AgentBookingHeaderCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBookingHeaderCell.swift; sourceTree = "<group>"; };
+		448603BA25F464E3002A78A8 /* AdminBookTicketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminBookTicketVC.swift; sourceTree = "<group>"; };
+		4488359B25A8334600D56915 /* EditTicketTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditTicketTimeVC.swift; sourceTree = "<group>"; };
+		44886ECD25AAAC02001775D2 /* AgentInfoEditVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentInfoEditVC.swift; sourceTree = "<group>"; };
+		44BE04AD268AA9C7008CC401 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		44C2E6682699C09B00E3F077 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		44D336DA25A5C9B600B64917 /* WTM.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WTM.entitlements; sourceTree = "<group>"; };
+		44D627482575048200E38168 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		44D627492575048200E38168 /* CurrentUserInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrentUserInfo.swift; sourceTree = "<group>"; };
+		44D6274A2575048200E38168 /* Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utility.swift; sourceTree = "<group>"; };
+		44D627562575049C00E38168 /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
+		44D627572575049C00E38168 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Medium.ttf"; sourceTree = "<group>"; };
+		44D627582575049C00E38168 /* Montserrat-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BoldItalic.ttf"; sourceTree = "<group>"; };
+		44D627592575049C00E38168 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Light.ttf"; sourceTree = "<group>"; };
+		44D6275A2575049C00E38168 /* Montserrat-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ThinItalic.ttf"; sourceTree = "<group>"; };
+		44D6275B2575049C00E38168 /* Montserrat-ExtraLight.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLight.ttf"; sourceTree = "<group>"; };
+		44D6275C2575049C00E38168 /* Montserrat-Thin.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Thin.ttf"; sourceTree = "<group>"; };
+		44D6275D2575049C00E38168 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
+		44D6275E2575049C00E38168 /* Montserrat-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-MediumItalic.ttf"; sourceTree = "<group>"; };
+		44D6275F2575049C00E38168 /* Montserrat-BlackItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-BlackItalic.ttf"; sourceTree = "<group>"; };
+		44D627602575049C00E38168 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		44D627612575049C00E38168 /* Montserrat-ExtraLightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraLightItalic.ttf"; sourceTree = "<group>"; };
+		44D627622575049C00E38168 /* Montserrat-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBold.ttf"; sourceTree = "<group>"; };
+		44D627632575049C00E38168 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = OFL.txt; sourceTree = "<group>"; };
+		44D627642575049C00E38168 /* Montserrat-Black.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Black.ttf"; sourceTree = "<group>"; };
+		44D627652575049C00E38168 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
+		44D627662575049C00E38168 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
+		44D627672575049C00E38168 /* Montserrat-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		44D627682575049C00E38168 /* Montserrat-ExtraBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-ExtraBoldItalic.ttf"; sourceTree = "<group>"; };
+		44D6278525750E3E00E38168 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
+		44D6278A25750E5000E38168 /* ForgotPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordVC.swift; sourceTree = "<group>"; };
+		44D6278F25750E6500E38168 /* AgentDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentDashboardVC.swift; sourceTree = "<group>"; };
+		44D6279425750E8900E38168 /* AgentBookingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBookingVC.swift; sourceTree = "<group>"; };
+		44D6279A257521B900E38168 /* AgentBookingTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBookingTblCell.swift; sourceTree = "<group>"; };
+		44D9125A25766E0000EBF185 /* BookingConfirmationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookingConfirmationVC.swift; sourceTree = "<group>"; };
+		44D9125F25767E9900EBF185 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		44D912672576877800EBF185 /* AdminDashboardVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminDashboardVC.swift; sourceTree = "<group>"; };
+		44DE35992588C32600B6B7B5 /* AdminTicketListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTicketListVC.swift; sourceTree = "<group>"; };
+		44DE359E2588C3A900B6B7B5 /* AdminTicketListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminTicketListCell.swift; sourceTree = "<group>"; };
+		44E5DA3225A0048E000E3C1E /* DeleteTaxiVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTaxiVC.swift; sourceTree = "<group>"; };
+		44E5DA3725A007CE000E3C1E /* DeleteTaxiCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteTaxiCell.swift; sourceTree = "<group>"; };
+		44E5DA3C25A07828000E3C1E /* AgentEditTicketVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentEditTicketVC.swift; sourceTree = "<group>"; };
+		44EB536D2591BFE700709EA8 /* SideMenuVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuVC.swift; sourceTree = "<group>"; };
+		44EB53722591C16100709EA8 /* SideMenuTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuTblCell.swift; sourceTree = "<group>"; };
+		44EB539F2591D17E00709EA8 /* AddTaxiStartTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaxiStartTimeCell.swift; sourceTree = "<group>"; };
+		44EB53A42591D19400709EA8 /* AddTaxiReturnTimeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaxiReturnTimeCell.swift; sourceTree = "<group>"; };
+		44F7012825A1B829004932A1 /* PastTicketListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PastTicketListVC.swift; sourceTree = "<group>"; };
+		44F766BA2594A72100AFE3DF /* LoadingUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingUserVC.swift; sourceTree = "<group>"; };
+		44F7679725982E0100AFE3DF /* AgentRequestVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRequestVC.swift; sourceTree = "<group>"; };
+		44F7679C25982E1300AFE3DF /* AgentListVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentListVC.swift; sourceTree = "<group>"; };
+		44F767A12598448100AFE3DF /* AgentListTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentListTblCell.swift; sourceTree = "<group>"; };
+		44F767A625985CEF00AFE3DF /* AgentRequestTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentRequestTblCell.swift; sourceTree = "<group>"; };
+		44FB527F2587AE460097146F /* TicketScannedDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicketScannedDetailVC.swift; sourceTree = "<group>"; };
+		44FB9C5E257F246C00AAC880 /* AgentBookingReturnTimeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBookingReturnTimeVC.swift; sourceTree = "<group>"; };
+		44FB9C63257F259600AAC880 /* AgentBookingReturnTblCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgentBookingReturnTblCell.swift; sourceTree = "<group>"; };
+		44FCB80A25AC46C500E3C883 /* SendMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendMessageVC.swift; sourceTree = "<group>"; };
+		44FCB80F25AC4B4D00E3C883 /* ViewMessageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewMessageVC.swift; sourceTree = "<group>"; };
+		45062B2D8A4C0B678719BB4E /* Pods_WTM_WTMUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WTM_WTMUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6EB81C009E425C7E93A9E1A3 /* Pods_WTM.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WTM.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7443F67AEA04961785D8469F /* Pods-WTM.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTM.debug.xcconfig"; path = "Target Support Files/Pods-WTM/Pods-WTM.debug.xcconfig"; sourceTree = "<group>"; };
+		A766EC4B36E1D0F6DBE796C6 /* Pods-WTMTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTMTests.debug.xcconfig"; path = "Target Support Files/Pods-WTMTests/Pods-WTMTests.debug.xcconfig"; sourceTree = "<group>"; };
+		AB80D929D71DEBBFF62F0A49 /* Pods-WTM-WTMUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTM-WTMUITests.release.xcconfig"; path = "Target Support Files/Pods-WTM-WTMUITests/Pods-WTM-WTMUITests.release.xcconfig"; sourceTree = "<group>"; };
+		B4EAB2448A8C5CA9AF523450 /* Pods_WTMTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WTMTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C3B556DE86C08BD5927D2AEF /* Pods-WTMTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTMTests.release.xcconfig"; path = "Target Support Files/Pods-WTMTests/Pods-WTMTests.release.xcconfig"; sourceTree = "<group>"; };
+		C869ACD1D30E734DA0EFD4CD /* Pods-WTM-WTMUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WTM-WTMUITests.debug.xcconfig"; path = "Target Support Files/Pods-WTM-WTMUITests/Pods-WTM-WTMUITests.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		444244CA25738D8F001AC495 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0007D05CA4D25AB8E8221F96 /* Pods_WTM.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244E025738D93001AC495 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0EF061A59E469AC271A4A0CA /* Pods_WTMTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244EB25738D93001AC495 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				345B9DD91CAC6AD6499010B2 /* Pods_WTM_WTMUITests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		12968F7044F240ECCC1DDDEC /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7443F67AEA04961785D8469F /* Pods-WTM.debug.xcconfig */,
+				389FB2D76C39965F2EE036DB /* Pods-WTM.release.xcconfig */,
+				C869ACD1D30E734DA0EFD4CD /* Pods-WTM-WTMUITests.debug.xcconfig */,
+				AB80D929D71DEBBFF62F0A49 /* Pods-WTM-WTMUITests.release.xcconfig */,
+				A766EC4B36E1D0F6DBE796C6 /* Pods-WTMTests.debug.xcconfig */,
+				C3B556DE86C08BD5927D2AEF /* Pods-WTMTests.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		444244C425738D8F001AC495 = {
+			isa = PBXGroup;
+			children = (
+				444244CF25738D8F001AC495 /* WTM */,
+				444244E625738D93001AC495 /* WTMTests */,
+				444244F125738D93001AC495 /* WTMUITests */,
+				444244CE25738D8F001AC495 /* Products */,
+				12968F7044F240ECCC1DDDEC /* Pods */,
+				B5D3006A56EFFD2F8A6FD641 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		444244CE25738D8F001AC495 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				444244CD25738D8F001AC495 /* WTM.app */,
+				444244E325738D93001AC495 /* WTMTests.xctest */,
+				444244EE25738D93001AC495 /* WTMUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		444244CF25738D8F001AC495 /* WTM */ = {
+			isa = PBXGroup;
+			children = (
+				44BE04AC268AA9B4008CC401 /* DatabaseManager */,
+				44D336DA25A5C9B600B64917 /* WTM.entitlements */,
+				44D9125F25767E9900EBF185 /* GoogleService-Info.plist */,
+				44D627992575219F00E38168 /* CustomCell */,
+				44D627472575048200E38168 /* GlobalClasses */,
+				44D627552575049C00E38168 /* Montserrat */,
+				444245292573A0C5001AC495 /* ViewController */,
+				444244D025738D8F001AC495 /* AppDelegate.swift */,
+				444244D225738D8F001AC495 /* SceneDelegate.swift */,
+				444244D425738D8F001AC495 /* ViewController.swift */,
+				444244D625738D8F001AC495 /* Main.storyboard */,
+				444244D925738D93001AC495 /* Assets.xcassets */,
+				444244DB25738D93001AC495 /* LaunchScreen.storyboard */,
+				444244DE25738D93001AC495 /* Info.plist */,
+			);
+			path = WTM;
+			sourceTree = "<group>";
+		};
+		444244E625738D93001AC495 /* WTMTests */ = {
+			isa = PBXGroup;
+			children = (
+				444244E725738D93001AC495 /* WTMTests.swift */,
+				444244E925738D93001AC495 /* Info.plist */,
+			);
+			path = WTMTests;
+			sourceTree = "<group>";
+		};
+		444244F125738D93001AC495 /* WTMUITests */ = {
+			isa = PBXGroup;
+			children = (
+				444244F225738D93001AC495 /* WTMUITests.swift */,
+				444244F425738D93001AC495 /* Info.plist */,
+			);
+			path = WTMUITests;
+			sourceTree = "<group>";
+		};
+		444245292573A0C5001AC495 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				4442452A2573A0E4001AC495 /* LoginVC.swift */,
+				44D6278525750E3E00E38168 /* RegisterVC.swift */,
+				44D6278A25750E5000E38168 /* ForgotPasswordVC.swift */,
+				44D6278F25750E6500E38168 /* AgentDashboardVC.swift */,
+				44D6279425750E8900E38168 /* AgentBookingVC.swift */,
+				44D9125A25766E0000EBF185 /* BookingConfirmationVC.swift */,
+				44D912672576877800EBF185 /* AdminDashboardVC.swift */,
+				447B0BA2257B3C550083A472 /* AdminAddTaxiVC.swift */,
+				44FB9C5E257F246C00AAC880 /* AgentBookingReturnTimeVC.swift */,
+				4478EF5A2585E6A8005D74ED /* TicketCheckVC.swift */,
+				4478EF622585ED7F005D74ED /* TicketScanVC.swift */,
+				44FB527F2587AE460097146F /* TicketScannedDetailVC.swift */,
+				44DE35992588C32600B6B7B5 /* AdminTicketListVC.swift */,
+				44EB536D2591BFE700709EA8 /* SideMenuVC.swift */,
+				44723ECD25931E1F00504EBA /* AdminAllTaxiListVC.swift */,
+				44F766BA2594A72100AFE3DF /* LoadingUserVC.swift */,
+				44F7679725982E0100AFE3DF /* AgentRequestVC.swift */,
+				44F7679C25982E1300AFE3DF /* AgentListVC.swift */,
+				44E5DA3225A0048E000E3C1E /* DeleteTaxiVC.swift */,
+				44E5DA3C25A07828000E3C1E /* AgentEditTicketVC.swift */,
+				44F7012825A1B829004932A1 /* PastTicketListVC.swift */,
+				4488359B25A8334600D56915 /* EditTicketTimeVC.swift */,
+				44886ECD25AAAC02001775D2 /* AgentInfoEditVC.swift */,
+				44FCB80A25AC46C500E3C883 /* SendMessageVC.swift */,
+				44FCB80F25AC4B4D00E3C883 /* ViewMessageVC.swift */,
+				447169F525B27F5C00298B59 /* EnterPinVC.swift */,
+				447169FA25B27F7300298B59 /* ConfirmPinVC.swift */,
+				44716A0D25B2A64D00298B59 /* LoginWithPinVC.swift */,
+				44438D6425BFA928007D9F6C /* AddAgentVC.swift */,
+				448603BA25F464E3002A78A8 /* AdminBookTicketVC.swift */,
+			);
+			path = ViewController;
+			sourceTree = "<group>";
+		};
+		44BE04AC268AA9B4008CC401 /* DatabaseManager */ = {
+			isa = PBXGroup;
+			children = (
+				44BE04AD268AA9C7008CC401 /* DatabaseManager.swift */,
+			);
+			path = DatabaseManager;
+			sourceTree = "<group>";
+		};
+		44D627472575048200E38168 /* GlobalClasses */ = {
+			isa = PBXGroup;
+			children = (
+				44D627482575048200E38168 /* Constant.swift */,
+				44D627492575048200E38168 /* CurrentUserInfo.swift */,
+				44D6274A2575048200E38168 /* Utility.swift */,
+				447169FF25B28F7000298B59 /* OTPTextField.swift */,
+				44716A0425B28FBE00298B59 /* OTPStackView.swift */,
+				44C2E6682699C09B00E3F077 /* Network.swift */,
+			);
+			path = GlobalClasses;
+			sourceTree = "<group>";
+		};
+		44D627552575049C00E38168 /* Montserrat */ = {
+			isa = PBXGroup;
+			children = (
+				44D627562575049C00E38168 /* Montserrat-LightItalic.ttf */,
+				44D627572575049C00E38168 /* Montserrat-Medium.ttf */,
+				44D627582575049C00E38168 /* Montserrat-BoldItalic.ttf */,
+				44D627592575049C00E38168 /* Montserrat-Light.ttf */,
+				44D6275A2575049C00E38168 /* Montserrat-ThinItalic.ttf */,
+				44D6275B2575049C00E38168 /* Montserrat-ExtraLight.ttf */,
+				44D6275C2575049C00E38168 /* Montserrat-Thin.ttf */,
+				44D6275D2575049C00E38168 /* Montserrat-Bold.ttf */,
+				44D6275E2575049C00E38168 /* Montserrat-MediumItalic.ttf */,
+				44D6275F2575049C00E38168 /* Montserrat-BlackItalic.ttf */,
+				44D627602575049C00E38168 /* Montserrat-SemiBold.ttf */,
+				44D627612575049C00E38168 /* Montserrat-ExtraLightItalic.ttf */,
+				44D627622575049C00E38168 /* Montserrat-ExtraBold.ttf */,
+				44D627632575049C00E38168 /* OFL.txt */,
+				44D627642575049C00E38168 /* Montserrat-Black.ttf */,
+				44D627652575049C00E38168 /* Montserrat-Regular.ttf */,
+				44D627662575049C00E38168 /* Montserrat-Italic.ttf */,
+				44D627672575049C00E38168 /* Montserrat-SemiBoldItalic.ttf */,
+				44D627682575049C00E38168 /* Montserrat-ExtraBoldItalic.ttf */,
+			);
+			path = Montserrat;
+			sourceTree = "<group>";
+		};
+		44D627992575219F00E38168 /* CustomCell */ = {
+			isa = PBXGroup;
+			children = (
+				44D6279A257521B900E38168 /* AgentBookingTblCell.swift */,
+				4484C83E25790A1C0000106A /* AgentBookingHeaderCell.swift */,
+				447B0B9D257B3B9D0083A472 /* AdminDashboardTblCell.swift */,
+				44FB9C63257F259600AAC880 /* AgentBookingReturnTblCell.swift */,
+				44DE359E2588C3A900B6B7B5 /* AdminTicketListCell.swift */,
+				44EB53722591C16100709EA8 /* SideMenuTblCell.swift */,
+				44EB539F2591D17E00709EA8 /* AddTaxiStartTimeCell.swift */,
+				44EB53A42591D19400709EA8 /* AddTaxiReturnTimeCell.swift */,
+				44723ED225931EEC00504EBA /* AdminTaxiListCell.swift */,
+				44F767A12598448100AFE3DF /* AgentListTblCell.swift */,
+				44F767A625985CEF00AFE3DF /* AgentRequestTblCell.swift */,
+				44E5DA3725A007CE000E3C1E /* DeleteTaxiCell.swift */,
+			);
+			path = CustomCell;
+			sourceTree = "<group>";
+		};
+		B5D3006A56EFFD2F8A6FD641 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6EB81C009E425C7E93A9E1A3 /* Pods_WTM.framework */,
+				45062B2D8A4C0B678719BB4E /* Pods_WTM_WTMUITests.framework */,
+				B4EAB2448A8C5CA9AF523450 /* Pods_WTMTests.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		444244CC25738D8F001AC495 /* WTM */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 444244F725738D93001AC495 /* Build configuration list for PBXNativeTarget "WTM" */;
+			buildPhases = (
+				6FDA807D08AC3EE196DBDA75 /* [CP] Check Pods Manifest.lock */,
+				444244C925738D8F001AC495 /* Sources */,
+				444244CA25738D8F001AC495 /* Frameworks */,
+				444244CB25738D8F001AC495 /* Resources */,
+				F0799249E73ED696119F637D /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = WTM;
+			productName = WTM;
+			productReference = 444244CD25738D8F001AC495 /* WTM.app */;
+			productType = "com.apple.product-type.application";
+		};
+		444244E225738D93001AC495 /* WTMTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 444244FA25738D93001AC495 /* Build configuration list for PBXNativeTarget "WTMTests" */;
+			buildPhases = (
+				E0662C4B6A3D7A806B158E9C /* [CP] Check Pods Manifest.lock */,
+				444244DF25738D93001AC495 /* Sources */,
+				444244E025738D93001AC495 /* Frameworks */,
+				444244E125738D93001AC495 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				444244E525738D93001AC495 /* PBXTargetDependency */,
+			);
+			name = WTMTests;
+			productName = WTMTests;
+			productReference = 444244E325738D93001AC495 /* WTMTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		444244ED25738D93001AC495 /* WTMUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 444244FD25738D93001AC495 /* Build configuration list for PBXNativeTarget "WTMUITests" */;
+			buildPhases = (
+				B80BAB715BCD21BC7ED918DD /* [CP] Check Pods Manifest.lock */,
+				444244EA25738D93001AC495 /* Sources */,
+				444244EB25738D93001AC495 /* Frameworks */,
+				444244EC25738D93001AC495 /* Resources */,
+				BCB82457AFD883FFC8BE749A /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				444244F025738D93001AC495 /* PBXTargetDependency */,
+			);
+			name = WTMUITests;
+			productName = WTMUITests;
+			productReference = 444244EE25738D93001AC495 /* WTMUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		444244C525738D8F001AC495 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					444244CC25738D8F001AC495 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					444244E225738D93001AC495 = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 444244CC25738D8F001AC495;
+					};
+					444244ED25738D93001AC495 = {
+						CreatedOnToolsVersion = 12.0;
+						TestTargetID = 444244CC25738D8F001AC495;
+					};
+				};
+			};
+			buildConfigurationList = 444244C825738D8F001AC495 /* Build configuration list for PBXProject "WTM" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 444244C425738D8F001AC495;
+			productRefGroup = 444244CE25738D8F001AC495 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				444244CC25738D8F001AC495 /* WTM */,
+				444244E225738D93001AC495 /* WTMTests */,
+				444244ED25738D93001AC495 /* WTMUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		444244CB25738D8F001AC495 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44D6277A2575049D00E38168 /* Montserrat-SemiBoldItalic.ttf in Resources */,
+				44D627762575049D00E38168 /* OFL.txt in Resources */,
+				44D6276F2575049D00E38168 /* Montserrat-Thin.ttf in Resources */,
+				44D9126025767E9900EBF185 /* GoogleService-Info.plist in Resources */,
+				44D6276C2575049D00E38168 /* Montserrat-Light.ttf in Resources */,
+				44D627742575049D00E38168 /* Montserrat-ExtraLightItalic.ttf in Resources */,
+				44D6276B2575049D00E38168 /* Montserrat-BoldItalic.ttf in Resources */,
+				44D6276D2575049D00E38168 /* Montserrat-ThinItalic.ttf in Resources */,
+				44D627752575049D00E38168 /* Montserrat-ExtraBold.ttf in Resources */,
+				44D627782575049D00E38168 /* Montserrat-Regular.ttf in Resources */,
+				44D627692575049D00E38168 /* Montserrat-LightItalic.ttf in Resources */,
+				44D6276E2575049D00E38168 /* Montserrat-ExtraLight.ttf in Resources */,
+				44D6276A2575049D00E38168 /* Montserrat-Medium.ttf in Resources */,
+				444244DD25738D93001AC495 /* LaunchScreen.storyboard in Resources */,
+				444244DA25738D93001AC495 /* Assets.xcassets in Resources */,
+				44D627722575049D00E38168 /* Montserrat-BlackItalic.ttf in Resources */,
+				44D627732575049D00E38168 /* Montserrat-SemiBold.ttf in Resources */,
+				44D627792575049D00E38168 /* Montserrat-Italic.ttf in Resources */,
+				44D627702575049D00E38168 /* Montserrat-Bold.ttf in Resources */,
+				44D627712575049D00E38168 /* Montserrat-MediumItalic.ttf in Resources */,
+				444244D825738D8F001AC495 /* Main.storyboard in Resources */,
+				44D627772575049D00E38168 /* Montserrat-Black.ttf in Resources */,
+				44D6277B2575049D00E38168 /* Montserrat-ExtraBoldItalic.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244E125738D93001AC495 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244EC25738D93001AC495 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6FDA807D08AC3EE196DBDA75 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WTM-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		B80BAB715BCD21BC7ED918DD /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WTM-WTMUITests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BCB82457AFD883FFC8BE749A /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WTM-WTMUITests/Pods-WTM-WTMUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WTM-WTMUITests/Pods-WTM-WTMUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WTM-WTMUITests/Pods-WTM-WTMUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		E0662C4B6A3D7A806B158E9C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-WTMTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		F0799249E73ED696119F637D /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WTM/Pods-WTM-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-WTM/Pods-WTM-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-WTM/Pods-WTM-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		444244C925738D8F001AC495 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44E5DA3825A007CE000E3C1E /* DeleteTaxiCell.swift in Sources */,
+				44F767A22598448100AFE3DF /* AgentListTblCell.swift in Sources */,
+				44F7679825982E0100AFE3DF /* AgentRequestVC.swift in Sources */,
+				4488359C25A8334700D56915 /* EditTicketTimeVC.swift in Sources */,
+				44D6274F2575048200E38168 /* Utility.swift in Sources */,
+				44FB9C64257F259600AAC880 /* AgentBookingReturnTblCell.swift in Sources */,
+				44D6278625750E3E00E38168 /* RegisterVC.swift in Sources */,
+				44E5DA3D25A07828000E3C1E /* AgentEditTicketVC.swift in Sources */,
+				447B0BA3257B3C550083A472 /* AdminAddTaxiVC.swift in Sources */,
+				447169F625B27F5C00298B59 /* EnterPinVC.swift in Sources */,
+				44D6279B257521B900E38168 /* AgentBookingTblCell.swift in Sources */,
+				44D9125B25766E0000EBF185 /* BookingConfirmationVC.swift in Sources */,
+				44723ECE25931E1F00504EBA /* AdminAllTaxiListVC.swift in Sources */,
+				44716A0025B28F7000298B59 /* OTPTextField.swift in Sources */,
+				44886ECE25AAAC02001775D2 /* AgentInfoEditVC.swift in Sources */,
+				44D6274E2575048200E38168 /* CurrentUserInfo.swift in Sources */,
+				444244D525738D8F001AC495 /* ViewController.swift in Sources */,
+				44EB53732591C16100709EA8 /* SideMenuTblCell.swift in Sources */,
+				44F7012925A1B829004932A1 /* PastTicketListVC.swift in Sources */,
+				44FB52802587AE460097146F /* TicketScannedDetailVC.swift in Sources */,
+				44716A0E25B2A64D00298B59 /* LoginWithPinVC.swift in Sources */,
+				4478EF632585ED7F005D74ED /* TicketScanVC.swift in Sources */,
+				44FB9C5F257F246C00AAC880 /* AgentBookingReturnTimeVC.swift in Sources */,
+				448603BB25F464E4002A78A8 /* AdminBookTicketVC.swift in Sources */,
+				44F7679D25982E1300AFE3DF /* AgentListVC.swift in Sources */,
+				44EB53A52591D19400709EA8 /* AddTaxiReturnTimeCell.swift in Sources */,
+				44C2E6692699C09C00E3F077 /* Network.swift in Sources */,
+				44716A0525B28FBE00298B59 /* OTPStackView.swift in Sources */,
+				444244D125738D8F001AC495 /* AppDelegate.swift in Sources */,
+				44D6278B25750E5000E38168 /* ForgotPasswordVC.swift in Sources */,
+				44F766BB2594A72100AFE3DF /* LoadingUserVC.swift in Sources */,
+				44D6279525750E8900E38168 /* AgentBookingVC.swift in Sources */,
+				447B0B9E257B3B9D0083A472 /* AdminDashboardTblCell.swift in Sources */,
+				44D6274D2575048200E38168 /* Constant.swift in Sources */,
+				44E5DA3325A0048E000E3C1E /* DeleteTaxiVC.swift in Sources */,
+				44FCB81025AC4B4D00E3C883 /* ViewMessageVC.swift in Sources */,
+				44D6279025750E6500E38168 /* AgentDashboardVC.swift in Sources */,
+				44D912682576877800EBF185 /* AdminDashboardVC.swift in Sources */,
+				4484C83F25790A1C0000106A /* AgentBookingHeaderCell.swift in Sources */,
+				44BE04AE268AA9C7008CC401 /* DatabaseManager.swift in Sources */,
+				447169FB25B27F7300298B59 /* ConfirmPinVC.swift in Sources */,
+				44723ED325931EEC00504EBA /* AdminTaxiListCell.swift in Sources */,
+				4478EF5B2585E6A8005D74ED /* TicketCheckVC.swift in Sources */,
+				44FCB80B25AC46C500E3C883 /* SendMessageVC.swift in Sources */,
+				44438D6525BFA928007D9F6C /* AddAgentVC.swift in Sources */,
+				44EB53A02591D17E00709EA8 /* AddTaxiStartTimeCell.swift in Sources */,
+				44DE359A2588C32600B6B7B5 /* AdminTicketListVC.swift in Sources */,
+				44F767A725985CF000AFE3DF /* AgentRequestTblCell.swift in Sources */,
+				44DE359F2588C3A900B6B7B5 /* AdminTicketListCell.swift in Sources */,
+				4442452B2573A0E4001AC495 /* LoginVC.swift in Sources */,
+				444244D325738D8F001AC495 /* SceneDelegate.swift in Sources */,
+				44EB536E2591BFE700709EA8 /* SideMenuVC.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244DF25738D93001AC495 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				444244E825738D93001AC495 /* WTMTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		444244EA25738D93001AC495 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				444244F325738D93001AC495 /* WTMUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		444244E525738D93001AC495 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 444244CC25738D8F001AC495 /* WTM */;
+			targetProxy = 444244E425738D93001AC495 /* PBXContainerItemProxy */;
+		};
+		444244F025738D93001AC495 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 444244CC25738D8F001AC495 /* WTM */;
+			targetProxy = 444244EF25738D93001AC495 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		444244D625738D8F001AC495 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				444244D725738D8F001AC495 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		444244DB25738D93001AC495 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				444244DC25738D93001AC495 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		444244F525738D93001AC495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		444244F625738D93001AC495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		444244F825738D93001AC495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7443F67AEA04961785D8469F /* Pods-WTM.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WTM/WTM.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = QUAAGQGW9B;
+				ENABLE_BITCODE = NO;
+				GCC_OPTIMIZATION_LEVEL = s;
+				INFOPLIST_FILE = WTM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobisprint.WTM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		444244F925738D93001AC495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 389FB2D76C39965F2EE036DB /* Pods-WTM.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = WTM/WTM.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 8;
+				DEVELOPMENT_TEAM = QUAAGQGW9B;
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = WTM/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mobisprint.WTM;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		444244FB25738D93001AC495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A766EC4B36E1D0F6DBE796C6 /* Pods-WTMTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WTMTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripWayManu.ShriRamVachan.WTMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WTM.app/WTM";
+			};
+			name = Debug;
+		};
+		444244FC25738D93001AC495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3B556DE86C08BD5927D2AEF /* Pods-WTMTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WTMTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripWayManu.ShriRamVachan.WTMTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WTM.app/WTM";
+			};
+			name = Release;
+		};
+		444244FE25738D93001AC495 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C869ACD1D30E734DA0EFD4CD /* Pods-WTM-WTMUITests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WTMUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripWayManu.ShriRamVachan.WTMUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WTM;
+			};
+			name = Debug;
+		};
+		444244FF25738D93001AC495 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AB80D929D71DEBBFF62F0A49 /* Pods-WTM-WTMUITests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = WTMUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.tripWayManu.ShriRamVachan.WTMUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = WTM;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		444244C825738D8F001AC495 /* Build configuration list for PBXProject "WTM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				444244F525738D93001AC495 /* Debug */,
+				444244F625738D93001AC495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		444244F725738D93001AC495 /* Build configuration list for PBXNativeTarget "WTM" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				444244F825738D93001AC495 /* Debug */,
+				444244F925738D93001AC495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		444244FA25738D93001AC495 /* Build configuration list for PBXNativeTarget "WTMTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				444244FB25738D93001AC495 /* Debug */,
+				444244FC25738D93001AC495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		444244FD25738D93001AC495 /* Build configuration list for PBXNativeTarget "WTMUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				444244FE25738D93001AC495 /* Debug */,
+				444244FF25738D93001AC495 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 444244C525738D8F001AC495 /* Project object */;
+}

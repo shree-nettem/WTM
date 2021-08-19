@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>718653935952-vvgukp6pv61qk3g0k4kpd4eb0j6n9mj2.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.718653935952-vvgukp6pv61qk3g0k4kpd4eb0j6n9mj2</string>
+	<key>API_KEY</key>
+	<string>AIzaSyDEuOjesVC2zBJLHUC6hzaxbmVEhE4mEZ8</string>
+	<key>GCM_SENDER_ID</key>
+	<string>718653935952</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.wtmbooking.live</string>
+	<key>PROJECT_ID</key>
+	<string>reservation-system-wtm</string>
+	<key>STORAGE_BUCKET</key>
+	<string>reservation-system-wtm.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:718653935952:ios:c8eea6b5452e0b3af89c55</string>
+	<key>DATABASE_URL</key>
+	<string>https://reservation-system-wtm.firebaseio.com</string>
+</dict>
+</plist>
