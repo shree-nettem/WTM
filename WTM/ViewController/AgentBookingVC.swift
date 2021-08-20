@@ -575,12 +575,15 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         transaction.setData([self.finalTicketID: bookingObject], forDocument: ref1)
                     }
                    
-                    
-                    if self.bookedReturnSeats > 0  {
-                        transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref2)
-                    } else {
-                        transaction.setData([self.finalTicketID: bookingObject], forDocument: ref2)
+                    if tripReturnTime != "" {
+                        if self.bookedReturnSeats > 0  {
+                            transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref2)
+                        } else {
+                            
+                            transaction.setData([self.finalTicketID: bookingObject], forDocument: ref2)
+                        }
                     }
+                  
                 }
                 
                 

@@ -101,7 +101,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
 //            for index in 0..<taxiListArray.count {
 //
 //                let data = taxiListArray.object(at: index) as! NSDictionary
-//                print(data)
+//                // print(data)
 //
 //                let dateFormatter = DateFormatter()
 //                dateFormatter.dateFormat = "ddMMMYYYY"
@@ -118,8 +118,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
 //                            Utility.hideActivityIndicator()
 //                            if statArray.count > 0 {
 //                                self.todayStatArray = statArray
-//                                print(self.todayStatArray)
-//                                self.tblView.reloadData()
+//                                // print(self.todayStatArray)
+//
 //                            }
 //                        }
 //                    } else {
@@ -138,120 +138,153 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         let calendar = Calendar.current
         let today = calendar.startOfDay(for: selectedDate)
         dayOfWeek = calendar.component(.weekday, from: today)
-        print(dayOfWeek)
+        // print(dayOfWeek)
+        
         DatabseManager.getTaxiList() { taxiListArray in
             self.taxiListArray = taxiListArray
             for index in 0..<taxiListArray.count {
                 
                 let data = taxiListArray.object(at: index) as! NSDictionary
-                print(data)
-                print(self.dayOfWeek)
+                // print(data)
+                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "ddMMMYYYY"
                 let todayDateString =  dateFormatter.string(from: self.selectedDate)
                 let taxiID : String = data["ID"] as! String
+                let taxiIDVal = String("\(taxiID)\(todayDateString)")
                 
-                var weekdaystarttimes = data["weekDayStartTiming"] as! Array<String>
-              
-                if self.dayOfWeek == 1 || self.dayOfWeek == 7  || self.dayOfWeek == -1 || self.dayOfWeek == -7 {
-                    weekdaystarttimes = data["weekEndStartTiming"] as! Array<String>
-                    
-                    if !self.isStatTimeSort {
-                        weekdaystarttimes = data["weekEndReturnTiming"] as! Array<String>
-                    }
-                }
-                else {
-                    if !self.isStatTimeSort {
-                        weekdaystarttimes = data["weekDayReturnTiming"] as! Array<String>
-                    }
-                    
-                    
-                }
-                
-                
-               
-                
-               
-               
-                
-                for timeIndex in 0..<weekdaystarttimes.count {
-                    
-                    
-                    let timeStramp = weekdaystarttimes[timeIndex]
-                    let taxiIDVal = String("\(taxiID)\(todayDateString)\(timeStramp)")
-                    
-                    print("sreee  \(taxiIDVal)")
-                  
-                    let db = Firestore.firestore()
-                    let docRef = db.collection("bookings").document(taxiIDVal)
-                    
-                    docRef.getDocument { (document, error) in
-                        
-                        if let document = document, document.exists {
-                            
-                            print("sreee document exists")
-                            self.tableViewReloaded = false
+                let db = Firestore.firestore()
+                let docRef = db.collection("todayStat").document(taxiIDVal)
+                docRef.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        Utility.hideActivityIndicator()
+                        DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
                             Utility.hideActivityIndicator()
-                            
-                            let bookedSeats = self.getTotalCount(BookingFile: document.data() ?? [:])
-                            
-                            print("sreee \(bookedSeats)")
-                           
-                           
-                            
-                            if finalStatArray.count <= 0 {
-                                DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
-                                    Utility.hideActivityIndicator()
-                                    
-                                    print(statArray)
-                                    if finalStatArray.count <= 0 {
-                                        finalStatArray = statArray
-                                        finalStatArray = self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                        self.todayStatArray = finalStatArray
-                                        print(self.todayStatArray)
-                                        self.tblView.reloadData()
-                                    } else {
-                                        finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                        self.todayStatArray = finalStatArray
-                                        print(self.todayStatArray)
-                                        self.tblView.reloadData()
-                                    }
-                                   
-                                }
-                            
-                            } else {
-                                finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                self.todayStatArray = finalStatArray
-                                print(self.todayStatArray)
+                            if statArray.count > 0 {
+                                self.todayStatArray = statArray
+                                // print(self.todayStatArray)
                                 self.tblView.reloadData()
                             }
-                            
-                           
-                            
-                           
-                        } else {
-                           
-                            if self.breakForLoop {
-                                self.breakForLoop = false
-                                Utility.hideActivityIndicator()
-//                                print(self.selectedDate)
-                                
-                                DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
-                               
-
-                                
-                            }
-                            
-                            
                         }
+                    } else {
+                        DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
                     }
                 }
-                
-                
-                print(self.todayStatArray)
-              
           }
         }
+//        DatabseManager.getTaxiList() { taxiListArray in
+//            self.taxiListArray = taxiListArray
+//            for index in 0..<taxiListArray.count {
+//
+//                let data = taxiListArray.object(at: index) as! NSDictionary
+//                // print(data)
+//                // print(self.dayOfWeek)
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "ddMMMYYYY"
+//                let todayDateString =  dateFormatter.string(from: self.selectedDate)
+//                let taxiID : String = data["ID"] as! String
+//
+//                var weekdaystarttimes = data["weekDayStartTiming"] as! Array<String>
+//
+//                if self.dayOfWeek == 1 || self.dayOfWeek == 7  || self.dayOfWeek == -1 || self.dayOfWeek == -7 {
+//                    weekdaystarttimes = data["weekEndStartTiming"] as! Array<String>
+//
+//                    if !self.isStatTimeSort {
+//                        weekdaystarttimes = data["weekEndReturnTiming"] as! Array<String>
+//                    }
+//                }
+//                else {
+//                    if !self.isStatTimeSort {
+//                        weekdaystarttimes = data["weekDayReturnTiming"] as! Array<String>
+//                    }
+//
+//
+//                }
+//
+//
+//
+//
+//
+//
+//
+//                for timeIndex in 0..<weekdaystarttimes.count {
+//
+//
+//                    let timeStramp = weekdaystarttimes[timeIndex]
+//                    let taxiIDVal = String("\(taxiID)\(todayDateString)\(timeStramp)")
+//
+//                    // print("sreee  \(taxiIDVal)")
+//
+//                    let db = Firestore.firestore()
+//                    let docRef = db.collection("bookings").document(taxiIDVal)
+//
+//                    docRef.getDocument { (document, error) in
+//
+//                        if let document = document, document.exists {
+//
+//                            // print("sreee document exists")
+//                            self.tableViewReloaded = false
+//                            Utility.hideActivityIndicator()
+//
+//                            let bookedSeats = self.getTotalCount(BookingFile: document.data() ?? [:])
+//
+//                            // print("sreee \(bookedSeats)")
+//
+//
+//
+//                            if finalStatArray.count <= 0 {
+//                                DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
+//                                    Utility.hideActivityIndicator()
+//
+//                                    // print(statArray)
+//                                    if finalStatArray.count <= 0 {
+//                                        finalStatArray = statArray
+//                                        finalStatArray = self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                        self.todayStatArray = finalStatArray
+//                                        // print(self.todayStatArray)
+//
+//                                    } else {
+//                                        finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                        self.todayStatArray = finalStatArray
+//                                        // print(self.todayStatArray)
+//
+//                                    }
+//
+//                                }
+//
+//                            } else {
+//                                finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                self.todayStatArray = finalStatArray
+//                                // print(self.todayStatArray)
+//
+//                            }
+//
+//
+//
+//
+//                        } else {
+//
+//                            if self.breakForLoop {
+//                                self.breakForLoop = false
+//                                Utility.hideActivityIndicator()
+////                                // print(self.selectedDate)
+//
+//                                DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
+//
+//
+//
+//                            }
+//
+//
+//                        }
+//                    }
+//                }
+//
+//
+//                // print(self.todayStatArray)
+//
+//          }
+//        }
 
         
     }
@@ -262,53 +295,14 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
             if self.tableViewReloaded {
                 
                 let finalStatArray = statArray
-                if finalStatArray.count > 0 {
-                     
-                        for statArrayIndex in 0..<finalStatArray.count {
-                        var signleDocument = finalStatArray[statArrayIndex] as? Dictionary<String,Any>
-                        
-//                        if signleDocument?["taxiID"] as? String ?? "" == taxiID {
-                            
-                            
-                            var weekdaystarttimes = signleDocument?["timingList"] as! Array<Dictionary<String,Any>>
-                            
-                            if !self.isStatTimeSort {
-                                weekdaystarttimes = signleDocument?["returnTimingList"] as! Array<Dictionary<String,Any>>
-                            }
-                            
-                            for timeIndex in 0..<weekdaystarttimes.count {
-                          
-//                                if timeStramp == weekdaystarttimes[timeIndex]["time"] as? String {
-                                    weekdaystarttimes[timeIndex]["alreadyBooked"] = 0
-                                  
-//                                }
-                            }
-                            if self.isStatTimeSort {
-                                signleDocument?["timingList"] = weekdaystarttimes
-                            } else {
-                                signleDocument?["returnTimingList"] = weekdaystarttimes
-                                
-                            }
-                            
-                            
-                            print(weekdaystarttimes)
-//                        }
-                        
-                            finalStatArray[statArrayIndex] = signleDocument ?? [:]
-                      
-                    }
-                    
-                   
-                   
-                  
-                }
+//
                 
                 
                 
                 
                 if finalStatArray.count > 0 {
                     self.todayStatArray = finalStatArray
-                    print(self.todayStatArray)
+                    // print(self.todayStatArray)
                     self.tblView.reloadData()
                 }
             }
@@ -325,7 +319,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
     
     func textFieldDidEndEditing(_ textField: UITextField) {
         let tag = textField.tag
-        print(tag)
+        // print(tag)
     }
     
     @IBAction func onClickBackAcn(){
@@ -352,8 +346,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
 //            Utility.hideActivityIndicator()
 //            if statArray.count > 0 {
 //                self.todayStatArray = statArray
-//                print(self.todayStatArray)
-//                self.tblView.reloadData()
+//                // print(self.todayStatArray)
+//
 //            }
 //        }
         
@@ -397,7 +391,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
     
     func getUpdatedAgentList() {
         self.getAgentList() { agentListArray in
-            print(agentListArray)
+            // print(agentListArray)
             if agentListArray.count > 0 {
                 self.agentListArray = agentListArray
             }
@@ -416,7 +410,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         bookingRef.getDocuments() { (querySnapshot, err) in
                 Utility.hideActivityIndicator()
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    // print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
                         
@@ -445,7 +439,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         bookingRef.getDocuments() { (querySnapshot, err) in
                 Utility.hideActivityIndicator()
                 if let err = err {
-                    print("Error getting documents: \(err)")
+                    // print("Error getting documents: \(err)")
                 } else {
                     for document in querySnapshot!.documents {
                         statArray.add(document.data())
@@ -496,7 +490,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
     }
     func calendar(_ calendar: FSCalendar, didSelect date: Date, at monthPosition: FSCalendarMonthPosition) {
        
-        print(date)
+        // print(date)
         calendar.isHidden = true
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MMM-yyyy"
@@ -509,7 +503,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
 //        DatabseManager.getTaxiList() { taxiListArray in
 //            for index in 0..<taxiListArray.count {
 //                let data = taxiListArray.object(at: index) as! NSDictionary
-//                print(data)
+//                // print(data)
 //
 //                let dateFormatter = DateFormatter()
 //                dateFormatter.dateFormat = "ddMMMYYYY"
@@ -526,8 +520,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
 //                            Utility.hideActivityIndicator()
 //                            if statArray.count > 0 {
 //                                self.todayStatArray = statArray
-//                                print(self.todayStatArray)
-//                                self.tblView.reloadData()
+//                                // print(self.todayStatArray)
+//
 //                            }
 //                        }
 //                    } else {
@@ -573,8 +567,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         
         func indexPathsForSection() -> [IndexPath] {
             var indexPaths = [IndexPath]()
-            let data = self.todayStatArray.object(at: section) as! NSDictionary
-            let arr : NSArray = data["timingList"] as! NSArray
+              let data = self.todayStatArray.object(at: section) as? NSDictionary ?? [:]
+            let arr : NSArray = data["timingList"] as? NSArray ?? []
             for row in 0..<arr.count {
                 indexPaths.append(IndexPath(row: row,
                                             section: section))
@@ -618,7 +612,9 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         cell.selectionStyle = UITableViewCell.SelectionStyle.none
         cell.vwDashedLine.makeDashedBorderLine()
         
-        let data = self.todayStatArray.object(at: indexPath.section) as! NSDictionary
+        guard let data = self.todayStatArray.object(at: indexPath.section) as? NSDictionary else {
+            return UITableViewCell()
+        }
        // let arr : NSArray = data["timingList"] as! NSArray
         
         
@@ -632,7 +628,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         }
         
         
-        print(arr)
+        // print(arr)
         
         
         let dateFormatter = DateFormatter()
@@ -645,7 +641,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         let taxiIDVal = "\(data["taxiID"] as? String ?? "")\(todayDateString)\(timeStr)"
 //        let taxiIDVal = String("162806891718Aug20213:30 PM")
         
-        print("sreee  \(taxiIDVal)")
+        // print("sreee  \(taxiIDVal)")
       
         cell.lblTimeSlot.text = (rowData["time"] as? String ?? "")
         let db = Firestore.firestore()
@@ -689,7 +685,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
             vc.taxiData = self.taxiListArray.object(at:indexPath.section) as! NSDictionary
             let totalSeats = Int(truncating: data["totalSeats"] as! NSNumber)
             
-            print(data)
+            // print(data)
             
             //let arr : NSArray = data["timingList"] as! NSArray
             var arr = NSArray()
@@ -709,11 +705,11 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
             let rowData = arr.object(at: indexPath.row) as! NSDictionary
             let alreadyBooked = Int(truncating: rowData["alreadyBooked"] as! NSNumber)
             let ticketTime = (rowData["time"] as! String)
-            print(rowData)
+            // print(rowData)
             let now = Date()
             
             DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: ticketTime, timeType: ticketType, startDeparting: isStatTimeSort, completion: { count , backtime in
-                print(count)
+                // print(count)
                 
                 
                 if self.selectedDate > now {
@@ -729,12 +725,12 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                         }
                        // vc.returnTimeArray = data["returnTimingList"] as! NSArray
                         vc.tripStartTimeArray = arr
-                        print(Int(truncating: data["totalSeats"] as! NSNumber))
+                        // print(Int(truncating: data["totalSeats"] as! NSNumber))
                         vc.totalSeatsInTaxi = Int(truncating: data["totalSeats"] as! NSNumber)
                         vc.selectedDate = self.selectedDate
                         vc.isAdminTicketBook = false
                         vc.startAvailableSeats = Int(truncating: data["totalSeats"] as! NSNumber) - Int(truncating: rowData["alreadyBooked"] as! NSNumber)
-                        print(self.isStatTimeSort)
+                        // print(self.isStatTimeSort)
                         vc.isStatTimeSort = self.isStatTimeSort
                         
                         if self.isRoundTrip {
@@ -767,7 +763,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                                                           inDateFormat:  "h:mm a",
                                                           outDateFormat: "HH:mm")
                         
-                        print(outStr)
+                        // print(outStr)
                         let calendar = Calendar.current
                         let time=calendar.dateComponents([.hour,.minute,.second], from: Date())
                         let dateFormatter = DateFormatter()
@@ -776,8 +772,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                         let selectedTicketTime = dateFormatter.date(from: outStr)!
                         let currentAgentTime = dateFormatter.date(from: String("\(time.hour!):\(time.minute!)"))!
        
-                        print(selectedTicketTime)
-                        print(currentAgentTime)
+                        // print(selectedTicketTime)
+                        // print(currentAgentTime)
                         
                         if self.isRoundTrip {
                             if selectedTicketTime > currentAgentTime   {
@@ -823,7 +819,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     
                     let data : NSDictionary = self.todayStatArray.object(at: indexPath.section) as! NSDictionary
                     vc.taxiData = self.taxiListArray.object(at:indexPath.section) as! NSDictionary
-                    print(data)
+                    // print(data)
                     //let arr : NSArray = data["timingList"] as! NSArray
                     
                     var arr = NSArray()
@@ -836,7 +832,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     
                     
                     let rowData = arr.object(at: indexPath.row) as! NSDictionary
-                    print(rowData)
+                    // print(rowData)
                     vc.tripStartTime = (rowData["time"] as! String)
                     
                     //vc.returnTimeArray = data["returnTimingList"] as! NSArray
@@ -849,7 +845,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     
                     
                     vc.tripStartTimeArray = arr
-                    print(Int(truncating: data["totalSeats"] as! NSNumber))
+                    // print(Int(truncating: data["totalSeats"] as! NSNumber))
                     vc.totalSeatsInTaxi = Int(truncating: data["totalSeats"] as! NSNumber)
                     vc.selectedDate = selectedDate
                     vc.isAdminTicketBook = true
@@ -864,7 +860,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     
                     let data : NSDictionary = self.todayStatArray.object(at: indexPath.section) as! NSDictionary
                     vc.taxiData = self.taxiListArray.object(at:indexPath.section) as! NSDictionary
-                    print(data)
+                    // print(data)
                  //   let arr : NSArray = data["timingList"] as! NSArray
                     
                     var arr = NSArray()
@@ -877,13 +873,13 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     
                     
                     let rowData = arr.object(at: indexPath.row) as! NSDictionary
-                    print(rowData)
+                    // print(rowData)
                     vc.tripStartTime = (rowData["time"] as! String)
                     let selectedSlot = (rowData["time"] as! String)
                     //Convert Date from Hours
                     let outStr = dateTimeChangeFormat(str: selectedSlot, inDateFormat:  "h:mm a", outDateFormat: "HH:mm")
                     
-                    print(outStr)
+                    // print(outStr)
                     let calendar = Calendar.current
                     let time=calendar.dateComponents([.hour,.minute,.second], from: Date())
                     let dateFormatter = DateFormatter()
@@ -902,9 +898,9 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                         else {
                             vc.returnTimeArray = data["timingList"] as! NSArray
                         }
-                        print(vc.returnTimeArray)
+                        // print(vc.returnTimeArray)
                         vc.tripStartTimeArray = arr
-                        print(Int(truncating: data["totalSeats"] as! NSNumber))
+                        // print(Int(truncating: data["totalSeats"] as! NSNumber))
                         vc.totalSeatsInTaxi = Int(truncating: data["totalSeats"] as! NSNumber)
                         vc.selectedDate = selectedDate
                         vc.isAdminTicketBook = true
@@ -924,12 +920,20 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-            if self.hiddenSections.contains(section) {
-                return 0
-            }
-            let data = self.todayStatArray.object(at: section) as! NSDictionary
-            let arr : NSArray = data["timingList"] as! NSArray
-            return arr.count
+        if self.hiddenSections.contains(section) {
+            return 0
+        }
+        let data = self.todayStatArray.object(at: section) as! NSDictionary
+        print(data)
+       // let arr : NSArray = data["timingList"] as! NSArray
+        var arr = NSArray()
+        if isStatTimeSort {
+            arr = data["timingList"] as! NSArray
+        }
+        else {
+            arr = data["returnTimingList"] as! NSArray
+        }
+        return arr.count
     }
     func numberOfSections(in tableView: UITableView) -> Int {
            return self.todayStatArray.count
@@ -938,8 +942,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
     //MARK:- Check For Return Time
     func checkForReturnTime(startTime : String , returnTime : NSArray, indexNumber : Int, totalSeats : Int, taxiData : NSDictionary) {
         
-        print(startTime)
-        print(returnTime)
+        // print(startTime)
+        // print(returnTime)
        // let startIndex = indexNumber + 2
         var flag : Bool = false
         var stepCount : Int = 0
@@ -965,8 +969,8 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                 let selectedTicketTime = dateFormatter.date(from: outStr)!
                 let currentAgentTime = dateFormatter.date(from: outStr1)!
                 
-                print(selectedTicketTime)
-                print(currentAgentTime)
+                // print(selectedTicketTime)
+                // print(currentAgentTime)
                 
                 
                 if selectedTicketTime > currentAgentTime {
@@ -989,7 +993,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                              ticketType = "tripReturnTime"
                         }
                         DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: selectedTime, timeType: ticketType, startDeparting: isStatTimeSort, completion: { count , backtime in
-                            print(count)
+                            // print(count)
 //                            if totalSeats - count > 0 {
                                 flag = true
                                 
@@ -1019,7 +1023,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
             }
             
             DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: selectedFirstStepTime, timeType: ticketType, startDeparting: isStatTimeSort, completion: { count , backtime in
-                print(count)
+                // print(count)
 //                if totalSeats - count > 0 {
                     flag = true
                     
@@ -1044,7 +1048,6 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         }
         
         
-        
     }
     
     
@@ -1062,13 +1065,14 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         let inStr = stringWithDate
         let date = inFormatter.date(from: inStr)!
         
-        //Add 30 Min to date
+        
+        //Add 5 Min to date for agent
         let earlyDate = Calendar.current.date(
           byAdding: .minute,
-          value: 30,
+          value: 6,
             to: date)! as Date
-        print(date)
-        print(earlyDate)
+        // print(date)
+        // print(earlyDate)
         return outFormatter.string(from: earlyDate)
         }
 
@@ -1105,7 +1109,7 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
                     }
                     
                     
-                    print(weekdaystarttimes)
+                    // print(weekdaystarttimes)
                 }
                 
                     finalStatArray[statArrayIndex] = signleDocument ?? [:]

@@ -857,120 +857,153 @@ class AgentDashboardVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         let today = calendar.startOfDay(for: selectedDate)
         dayOfWeek = calendar.component(.weekday, from: today)
         print(dayOfWeek)
+        
         DatabseManager.getTaxiList() { taxiListArray in
             self.taxiListArray = taxiListArray
             for index in 0..<taxiListArray.count {
                 
                 let data = taxiListArray.object(at: index) as! NSDictionary
                 print(data)
-                print(self.dayOfWeek)
+                
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = "ddMMMYYYY"
                 let todayDateString =  dateFormatter.string(from: self.selectedDate)
                 let taxiID : String = data["ID"] as! String
+                let taxiIDVal = String("\(taxiID)\(todayDateString)")
                 
-                var weekdaystarttimes = data["weekDayStartTiming"] as! Array<String>
-              
-                if self.dayOfWeek == 1 || self.dayOfWeek == 7  || self.dayOfWeek == -1 || self.dayOfWeek == -7 {
-                    weekdaystarttimes = data["weekEndStartTiming"] as! Array<String>
-                    
-                    if !self.isStatTimeSort {
-                        weekdaystarttimes = data["weekEndReturnTiming"] as! Array<String>
-                    }
-                }
-                else {
-                    if !self.isStatTimeSort {
-                        weekdaystarttimes = data["weekDayReturnTiming"] as! Array<String>
-                    }
-                    
-                    
-                }
-                
-                
-               
-                
-               
-                
-                for timeIndex in 0..<weekdaystarttimes.count {
-                    
-                    
-                    let timeStramp = weekdaystarttimes[timeIndex]
-                    let taxiIDVal = String("\(taxiID)\(todayDateString)\(timeStramp)")
-                    
-                    print("sreee  \(taxiIDVal)")
-                  
-                    let db = Firestore.firestore()
-                    let docRef = db.collection("bookings").document(taxiIDVal)
-                    
-                    docRef.getDocument { (document, error) in
-                        
-                        if let document = document, document.exists {
-                            
-                            print("sreee document exists")
-                            self.tableViewReloaded = false
+                let db = Firestore.firestore()
+                let docRef = db.collection("todayStat").document(taxiIDVal)
+                docRef.getDocument { (document, error) in
+                    if let document = document, document.exists {
+                        Utility.hideActivityIndicator()
+                        DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
                             Utility.hideActivityIndicator()
-                            
-                            let bookedSeats = self.getTotalCount(BookingFile: document.data() ?? [:])
-                            
-                            print("sreee \(bookedSeats)")
-                           
-                           
-                            
-                            if finalStatArray.count <= 0 {
-                                DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
-                                    Utility.hideActivityIndicator()
-                                    
-                                    print(statArray)
-                                    if finalStatArray.count <= 0 {
-                                        finalStatArray = statArray
-                                        
-                                        
-                                        finalStatArray = self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                        self.todayStatArray = finalStatArray
-                                        print(self.todayStatArray)
-                                        self.tblView.reloadData()
-                                    } else {
-                                        finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                        self.todayStatArray = finalStatArray
-                                        print(self.todayStatArray)
-                                        self.tblView.reloadData()
-                                    }
-                                   
-                                }
-                            
-                            } else {
-                                finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
-                                self.todayStatArray = finalStatArray
+                            if statArray.count > 0 {
+                                self.todayStatArray = statArray
                                 print(self.todayStatArray)
                                 self.tblView.reloadData()
                             }
-                            
-                           
-                            
-                           
-                        } else {
-                           
-                            if self.breakForLoop {
-                                self.breakForLoop = false
-                                Utility.hideActivityIndicator()
-//                                print(self.selectedDate)
-                                
-                                DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
-                               
-
-                                
-                            }
-                            
-                            
                         }
+                    } else {
+                        DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
                     }
                 }
-                
-                
-                print(self.todayStatArray)
-              
           }
         }
+//        DatabseManager.getTaxiList() { taxiListArray in
+//            self.taxiListArray = taxiListArray
+//            for index in 0..<taxiListArray.count {
+//
+//                let data = taxiListArray.object(at: index) as! NSDictionary
+//                print(data)
+//                print(self.dayOfWeek)
+//                let dateFormatter = DateFormatter()
+//                dateFormatter.dateFormat = "ddMMMYYYY"
+//                let todayDateString =  dateFormatter.string(from: self.selectedDate)
+//                let taxiID : String = data["ID"] as! String
+//
+//                var weekdaystarttimes = data["weekDayStartTiming"] as! Array<String>
+//
+//                if self.dayOfWeek == 1 || self.dayOfWeek == 7  || self.dayOfWeek == -1 || self.dayOfWeek == -7 {
+//                    weekdaystarttimes = data["weekEndStartTiming"] as! Array<String>
+//
+//                    if !self.isStatTimeSort {
+//                        weekdaystarttimes = data["weekEndReturnTiming"] as! Array<String>
+//                    }
+//                }
+//                else {
+//                    if !self.isStatTimeSort {
+//                        weekdaystarttimes = data["weekDayReturnTiming"] as! Array<String>
+//                    }
+//
+//
+//                }
+//
+//
+//
+//
+//
+//
+//                for timeIndex in 0..<weekdaystarttimes.count {
+//
+//
+//                    let timeStramp = weekdaystarttimes[timeIndex]
+//                    let taxiIDVal = String("\(taxiID)\(todayDateString)\(timeStramp)")
+//
+//                    print("sreee  \(taxiIDVal)")
+//
+//                    let db = Firestore.firestore()
+//                    let docRef = db.collection("bookings").document(taxiIDVal)
+//
+//                    docRef.getDocument { (document, error) in
+//
+//                        if let document = document, document.exists {
+//
+//                            print("sreee document exists")
+//                            self.tableViewReloaded = false
+//                            Utility.hideActivityIndicator()
+//
+//                            let bookedSeats = self.getTotalCount(BookingFile: document.data() ?? [:])
+//
+//                            print("sreee \(bookedSeats)")
+//
+//
+//
+//                            if finalStatArray.count <= 0 {
+//                                DatabseManager.getTodayStatData(selectedDate: self.selectedDate) { statArray in
+//                                    Utility.hideActivityIndicator()
+//
+//                                    print(statArray)
+//                                    if finalStatArray.count <= 0 {
+//                                        finalStatArray = statArray
+//
+//
+//                                        finalStatArray = self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                        self.todayStatArray = finalStatArray
+//                                        print(self.todayStatArray)
+//                                        self.tblView.reloadData()
+//                                    } else {
+//                                        finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                        self.todayStatArray = finalStatArray
+//                                        print(self.todayStatArray)
+//                                        self.tblView.reloadData()
+//                                    }
+//
+//                                }
+//
+//                            } else {
+//                                finalStatArray =  self.reloadingTableViewWithData(finalStatArray: finalStatArray, taxiID: taxiID, timeStramp: timeStramp, bookedSeats: bookedSeats)
+//                                self.todayStatArray = finalStatArray
+//                                print(self.todayStatArray)
+//                                self.tblView.reloadData()
+//                            }
+//
+//
+//
+//
+//                        } else {
+//
+//                            if self.breakForLoop {
+//                                self.breakForLoop = false
+//                                Utility.hideActivityIndicator()
+////                                print(self.selectedDate)
+//
+//                                DatabseManager.setTodayStatData(selectedDate: self.selectedDate)
+//
+//
+//
+//                            }
+//
+//
+//                        }
+//                    }
+//                }
+//
+//
+//                print(self.todayStatArray)
+//
+//          }
+//        }
 
         
     }
