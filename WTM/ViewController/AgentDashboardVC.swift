@@ -89,9 +89,9 @@ class AgentDashboardVC: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         ticketBoardingViewHeight.constant = 70.0
         
-//        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-//            self.checkAppVersion()
-//        }
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+            self.checkAppVersion()
+        }
         
         //Calender
         calendar.dataSource = self
