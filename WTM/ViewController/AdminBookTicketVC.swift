@@ -638,7 +638,14 @@ class AdminBookTicketVC: UIViewController , UITableViewDelegate, UITableViewData
         let rowData = arr.object(at: indexPath.row) as? NSDictionary ?? [:]
         let timeStr = (rowData["time"] as? String ?? "")
 
-        let taxiIDVal = "\(data["taxiID"] as? String ?? "")\(todayDateString)\(timeStr)"
+        var taxiIDVal = String()
+        if isStatTimeSort {
+            taxiIDVal = "\(data["taxiID"] as? String ?? "")\(todayDateString)BS\(timeStr)"
+            
+        } else {
+            taxiIDVal = "\(data["taxiID"] as? String ?? "")\(todayDateString)MB\(timeStr)"
+        }
+        
 //        let taxiIDVal = String("162806891718Aug20213:30 PM")
         
         // print("sreee  \(taxiIDVal)")

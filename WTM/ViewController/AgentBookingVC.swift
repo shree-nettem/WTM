@@ -11,7 +11,7 @@ import FirebaseAuth
 import SwiftMessages
 
 class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDelegate , UITextViewDelegate {
-
+    
     @IBOutlet weak var txtName : UITextField!
     @IBOutlet weak var txtPhone : UITextField!
     @IBOutlet weak var txtStartTime : UITextField!
@@ -97,7 +97,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         
         print(tripStartTimeArray)
         print(tripReturnTimeArray)
-
+        
         txtName.setLeftPaddingPoints(15.0)
         txtPhone.setLeftPaddingPoints(15.0)
         txtStartTime.setLeftPaddingPoints(15.0)
@@ -177,7 +177,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         var returnPostRef = String()
         
         print(self.taxiData)
-      
+        
         var adultVal = String()
         var minorVal = String()
         var agentID = String()
@@ -192,7 +192,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         else {
             adultVal = self.txtAdults.text!
         }
-
+        
         if self.txtMinor.text! == "" {
             minorVal = "0"
         }
@@ -226,43 +226,61 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         self.currentBookingSeats = (Int(self.txtAdults.text!) ?? 0) + (Int(self.txtMinor.text!) ?? 0)
         
         print(self.currentBookingSeats)
-//        let seconds = Double.random(in: 0.0 ... 10.0)
-//        print(seconds)
+        //        let seconds = Double.random(in: 0.0 ... 10.0)
+        //        print(seconds)
         
-         Utility.showActivityIndicator()
-//        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            // Put your code which should be executed with a delay here
-       
+        Utility.showActivityIndicator()
+        //        DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+        // Put your code which should be executed with a delay here
+        
         let db = Firestore.firestore()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "ddMMMYYYY"
-            let selectedDateVal = dateFormatter.string(from:self.selectedDate)
+        let selectedDateVal = dateFormatter.string(from:self.selectedDate)
         
-//        var taxiIDVal = String()
+        //        var taxiIDVal = String()
         
-        
-        
-            if self.isTicketEdit {
-                let bookingDate = (self.ticketData["bookingDate"] as! String)
-                departurePostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)\(self.txtStartTime.text!)")
-                returnPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)\(self.txtReturnTime.text!)")
+        if isStatTimeSort {
+            lblDepartureTitle.text = "Departing Time BS"
+            lblArrivalTitle.text = "Departing Time MB"
         }
         else {
-            departurePostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)\(self.txtStartTime.text!)")
-            returnPostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)\(self.txtReturnTime.text!)")
+            lblDepartureTitle.text = "Departing Time MB"
+            lblArrivalTitle.text = "Departing Time BS"
+        }
+        
+        if self.isTicketEdit {
+            if isStatTimeSort {
+                let bookingDate = (self.ticketData["bookingDate"] as! String)
+                departurePostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)BS\(self.txtStartTime.text!)")
+                returnPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)MB\(self.txtReturnTime.text!)")
+            } else {
+                let bookingDate = (self.ticketData["bookingDate"] as! String)
+                departurePostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)MB\(self.txtStartTime.text!)")
+                returnPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDate)BS\(self.txtReturnTime.text!)")
+            }
+        }
+        else {
+            if isStatTimeSort {
+                departurePostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)BS\(self.txtStartTime.text!)")
+                returnPostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)MB\(self.txtReturnTime.text!)")
+            } else {
+                departurePostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)MB\(self.txtStartTime.text!)")
+                returnPostRef = String("\(self.taxiData["ID"]!)\(selectedDateVal)BS\(self.txtReturnTime.text!)")
+            }
         }
         
         print(departurePostRef,returnPostRef)
-       
-//        let bookingRef =  db.collection("todayStat").document(departurePostRef)
         
-//        let newBookingRef = db.collection("bookings").document("sam");
-//        let userJohn = db.collection("bookings").document("john");
+        //        let bookingRef =  db.collection("todayStat").document(departurePostRef)
         
-//        let departurePostRef = "\(self.ticketData["taxiID"] ?? "")\(self.txtStartTime.text ?? "")"
+        //        let newBookingRef = db.collection("bookings").document("sam");
+        //        let userJohn = db.collection("bookings").document("john");
         
-       
-//
+        //        let departurePostRef = "\(self.ticketData["taxiID"] ?? "")\(self.txtStartTime.text ?? "")"
+        
+        
+        //
         db.runTransaction { (transaction, error) -> Any? in
             
             let ref1 =  db.collection("bookings").document(departurePostRef)
@@ -271,76 +289,76 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             
             let sfDocumentdepartureref: DocumentSnapshot
             let sfDocumentreturnref: DocumentSnapshot
-                do {
-                    try sfDocumentdepartureref = transaction.getDocument(ref1)
-                    try sfDocumentreturnref = transaction.getDocument(ref2)
-                   
+            do {
+                try sfDocumentdepartureref = transaction.getDocument(ref1)
+                try sfDocumentreturnref = transaction.getDocument(ref2)
+                
+                
+                if let totaldepartDoc = sfDocumentdepartureref.data()  {
                     
-                    if let totaldepartDoc = sfDocumentdepartureref.data()  {
-                        
-                      
-                        self.bookedStartSeats = self.getTotalCount(BookingFile: totaldepartDoc)
-                        
-                       
-                        if self.isTicketEdit {
-                            self.startAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedStartSeats
-                        } else {
-                            self.startAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedStartSeats
-                        }
-                       
-                        
+                    
+                    self.bookedStartSeats = self.getTotalCount(BookingFile: totaldepartDoc)
+                    
+                    
+                    if self.isTicketEdit {
+                        self.startAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedStartSeats
                     } else {
-                        self.bookedStartSeats = 0
-                        
-                        if self.isTicketEdit {
-                            self.startAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0)
-                        } else {
-                            self.startAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0)
-                        }
-                       
+                        self.startAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedStartSeats
                     }
                     
                     
-               
+                } else {
+                    self.bookedStartSeats = 0
                     
-                    if let totalReturnDoc = sfDocumentreturnref.data() {
-                        
-                        self.bookedReturnSeats = self.getTotalCount(BookingFile: totalReturnDoc)
-                        
-                        if self.isTicketEdit {
-                            self.returnAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedReturnSeats
-                        } else {
-                            self.returnAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedReturnSeats
-                        }
-                       
+                    if self.isTicketEdit {
+                        self.startAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0)
                     } else {
-                        self.bookedReturnSeats = 0
-                        if self.isTicketEdit {
-                            self.returnAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0)
-                        } else {
-                            self.returnAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0)
-                        }
-                        
+                        self.startAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0)
                     }
                     
-                    
-
-                } catch let fetchError as NSError {
-                    error?.pointee = fetchError
-                    return nil
                 }
+                
+                
+                
+                
+                if let totalReturnDoc = sfDocumentreturnref.data() {
+                    
+                    self.bookedReturnSeats = self.getTotalCount(BookingFile: totalReturnDoc)
+                    
+                    if self.isTicketEdit {
+                        self.returnAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedReturnSeats
+                    } else {
+                        self.returnAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedReturnSeats
+                    }
+                    
+                } else {
+                    self.bookedReturnSeats = 0
+                    if self.isTicketEdit {
+                        self.returnAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0)
+                    } else {
+                        self.returnAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0)
+                    }
+                    
+                }
+                
+                
+                
+            } catch let fetchError as NSError {
+                error?.pointee = fetchError
+                return nil
+            }
             
             print(self.startAvailableSeats, self.bookedStartSeats,self.returnAvailableSeats , self.bookedReturnSeats)
             
             
             if self.startAvailableSeats < self.currentBookingSeats {
                 DispatchQueue.main.async {
-                let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
-                SwiftMessages.show(view: vW)
+                    let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
+                    SwiftMessages.show(view: vW)
                 }
                 return nil
             }
-           
+            
             
             // variables for booking object
             let timestamp = NSDate().timeIntervalSince1970
@@ -354,151 +372,151 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             dateFormatter1.dateFormat = "dd/MM/YYYY"
             self.todayDate =  dateFormatter.string(from: self.selectedDate)
             
-          
+            
             
             var bookingObject:Dictionary<String,Any> = [:]
-//            DispatchQueue.main.async {
-               
+            //            DispatchQueue.main.async {
+            
+            
+            var taxiID = String()
+            if self.isTicketEdit {
+                taxiID =  self.taxiData["taxiID"] as! String
+                self.taxiTotalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
+            }
+            else {
+                taxiID =  self.taxiData["ID"] as! String
+                self.taxiTotalSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber)
+            }
+            
+            
+            if self.isAdminTicketBook {
+                agentID = (self.selectedAgentData["userID"] as! String)
+                agentName = (self.selectedAgentData["name"] as! String)
+            }
+            else {
+                agentID = CurrentUserInfo.userID!
+                agentName = CurrentUserInfo.name!
+            }
+            
+            if self.isTicketEdit {
+                agentID = (self.ticketData["bookingAgentID"] as! String)
+                agentName = (self.ticketData["agentName"] as! String)
                 
-                var taxiID = String()
-                if self.isTicketEdit {
-                    taxiID =  self.taxiData["taxiID"] as! String
-                    self.taxiTotalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
-                }
-                else {
-                    taxiID =  self.taxiData["ID"] as! String
-                    self.taxiTotalSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber)
-                }
-                
-                
-                if self.isAdminTicketBook {
-                    agentID = (self.selectedAgentData["userID"] as! String)
-                    agentName = (self.selectedAgentData["name"] as! String)
-                }
-                else {
-                    agentID = CurrentUserInfo.userID!
-                    agentName = CurrentUserInfo.name!
-                }
-                
-                if self.isTicketEdit {
-                    agentID = (self.ticketData["bookingAgentID"] as! String)
-                    agentName = (self.ticketData["agentName"] as! String)
-                    
-                }
-                
-                
-               
-                let numVal = String("\(intVal)")
+            }
+            
+            
+            
+            let numVal = String("\(intVal)")
             if !self.isTicketEdit {
-
+                
                 self.finalTicketID = String("\(userName.prefix(4))\("-")\(numVal.suffix(4))")
             }
-               
-                print(self.finalTicketID)
-
-        //        totalPaxToBook = Int(adultVal)! + Int(minorVal)!
-                
-                if self.currentBookingSeats <= 0 {
-                    let vW = Utility.displaySwiftAlert("", "Passenger count must atleast one." , type: SwiftAlertType.error.rawValue)
-                    SwiftMessages.show(view: vW)
-                } else {
-                    let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
-                    let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
-                    var deviceType = String()
-                    // 2. check the idiom
-                    switch (deviceIdiom) {
-                    case .pad:
-                        deviceType = "iPad"
-                        print("iPad style UI")
-                    case .phone:
-                        deviceType = "iPhone"
-                        print("iPhone and iPod touch style UI")
-                    case .tv:
-                        deviceType = "tvOS"
-                        print("tvOS style UI")
-                    default:
-                        deviceType = "Unspecified"
-                        print("Unspecified UI idiom")
-                    }
-                    
-                    
-                    
-                    
-                     bookingObject = [
-                        "bookingDate": self.todayDate,
-                        "bookingAgentID": agentID,
-                        "adult" : adultVal,
-                        "minor" : minorVal,
-                        "customerName" : customerName,
-                        "customePhone" : customePhone,
-                        "tripStartTime" : tripStartTime,
-                        "tripReturnTime" : tripReturnTime,
-                        "taxiID": taxiID,
-                        "agentName": agentName,
-                        "status":"Pending",
-                        "ticketID":self.finalTicketID,
-                        "bookingDateTimeStamp": FieldValue.serverTimestamp(),
-                        "email":email,
-                        "comment":comment,
-                        "todayDateString":todayDateString,
-                        "isAdminTicketBook":self.isAdminTicketBook,
-                        "ticketDepartureSide":departureSide,
-                        "startDeparting":self.isStatTimeSort,
-                        "device":"IOS",
-                        "startDepartureStatus":"Pending",
-                        "returnDepartureStatus":"Pending",
-                        "version":currentAppVersion!,
-                        "deviceIdiom":deviceType,
-                        "isRoundTrip":self.isRoundTrip,
-                        "squareCode":squareCode
-                    ] as [String : Any]
-                    
-                   
+            
+            print(self.finalTicketID)
+            
+            //        totalPaxToBook = Int(adultVal)! + Int(minorVal)!
+            
+            if self.currentBookingSeats <= 0 {
+                let vW = Utility.displaySwiftAlert("", "Passenger count must atleast one." , type: SwiftAlertType.error.rawValue)
+                SwiftMessages.show(view: vW)
+            } else {
+                let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+                let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
+                var deviceType = String()
+                // 2. check the idiom
+                switch (deviceIdiom) {
+                case .pad:
+                    deviceType = "iPad"
+                    print("iPad style UI")
+                case .phone:
+                    deviceType = "iPhone"
+                    print("iPhone and iPod touch style UI")
+                case .tv:
+                    deviceType = "tvOS"
+                    print("tvOS style UI")
+                default:
+                    deviceType = "Unspecified"
+                    print("Unspecified UI idiom")
                 }
                 
                 
+                
+                
+                bookingObject = [
+                    "bookingDate": self.todayDate,
+                    "bookingAgentID": agentID,
+                    "adult" : adultVal,
+                    "minor" : minorVal,
+                    "customerName" : customerName,
+                    "customePhone" : customePhone,
+                    "tripStartTime" : tripStartTime,
+                    "tripReturnTime" : tripReturnTime,
+                    "taxiID": taxiID,
+                    "agentName": agentName,
+                    "status":"Pending",
+                    "ticketID":self.finalTicketID,
+                    "bookingDateTimeStamp": FieldValue.serverTimestamp(),
+                    "email":email,
+                    "comment":comment,
+                    "todayDateString":todayDateString,
+                    "isAdminTicketBook":self.isAdminTicketBook,
+                    "ticketDepartureSide":departureSide,
+                    "startDeparting":self.isStatTimeSort,
+                    "device":"IOS",
+                    "startDepartureStatus":"Pending",
+                    "returnDepartureStatus":"Pending",
+                    "version":currentAppVersion!,
+                    "deviceIdiom":deviceType,
+                    "isRoundTrip":self.isRoundTrip,
+                    "squareCode":squareCode
+                ] as [String : Any]
+                
+                
+            }
+            
+            
             
             if tripStartTime != self.editTicketStartTime {
                 if self.startAvailableSeats < self.currentBookingSeats {
                     DispatchQueue.main.async {
-                    let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
-                    SwiftMessages.show(view: vW)
+                        let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
+                        SwiftMessages.show(view: vW)
                     }
                     return nil
                 }
             } else  {
                 if self.taxiTotalSeats < self.currentBookingSeats {
                     DispatchQueue.main.async {
-                    let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
-                    SwiftMessages.show(view: vW)
+                        let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
+                        SwiftMessages.show(view: vW)
                     }
                     return nil
                 }
             }
             
-          
+            
             
             if self.isRoundTrip {
                 
                 if tripReturnTime != self.editTicketReturnTime {
                     if self.returnAvailableSeats < self.currentBookingSeats {
                         DispatchQueue.main.async {
-                        let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-                        SwiftMessages.show(view: vW)
+                            let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+                            SwiftMessages.show(view: vW)
                         }
                         return nil
                     }
                 }  else  {
                     if self.taxiTotalSeats < self.currentBookingSeats {
                         DispatchQueue.main.async {
-                        let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-                        SwiftMessages.show(view: vW)
+                            let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+                            SwiftMessages.show(view: vW)
                         }
                         return nil
                     }
                 }
                 
-               
+                
                 
                 if self.isTicketEdit {
                     
@@ -517,9 +535,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         cancelBookingObject["tripStartTime"] = self.editTicketStartTime
                         cancelBookingObject["tripReturnTime"] = self.editTicketReturnTime
                         
-                       
+                        
                         transaction.updateData([self.finalTicketID: cancelBookingObject], forDocument: refCancell1)
-                      
+                        
                         
                         if self.bookedStartSeats > 0  {
                             transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref1)
@@ -529,7 +547,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         
                         
                         
-                      
+                        
                     }
                     
                     
@@ -549,7 +567,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         cancelBookingObject["tripStartTime"] = self.editTicketStartTime
                         cancelBookingObject["tripReturnTime"] = self.editTicketReturnTime
                         
-                       
+                        
                         transaction.updateData([self.finalTicketID: cancelBookingObject], forDocument: refCancell2)
                         
                         if self.bookedReturnSeats > 0  {
@@ -559,9 +577,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         }
                         
                         
-                       
-//                        bookingObject["status"] = "Cancelled"
-//                        transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref1)
+                        
+                        //                        bookingObject["status"] = "Cancelled"
+                        //                        transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref1)
                     }
                     
                     
@@ -574,7 +592,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     } else {
                         transaction.setData([self.finalTicketID: bookingObject], forDocument: ref1)
                     }
-                   
+                    
                     if tripReturnTime != "" {
                         if self.bookedReturnSeats > 0  {
                             transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref2)
@@ -583,19 +601,19 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                             transaction.setData([self.finalTicketID: bookingObject], forDocument: ref2)
                         }
                     }
-                  
+                    
                 }
                 
                 
-               
+                
                 
             } else {
                 if !self.isTicketEdit {
-                if self.bookedStartSeats > 0  {
-                    transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref1)
-                } else {
-                    transaction.setData([self.finalTicketID: bookingObject], forDocument: ref1)
-                }
+                    if self.bookedStartSeats > 0  {
+                        transaction.updateData([self.finalTicketID: bookingObject], forDocument: ref1)
+                    } else {
+                        transaction.setData([self.finalTicketID: bookingObject], forDocument: ref1)
+                    }
                 } else {
                     
                     if self.editTicketStartTime == tripStartTime {
@@ -610,9 +628,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         var cancelBookingObject = bookingObject
                         cancelBookingObject["status"] = "Cancelled"
                         cancelBookingObject["tripStartTime"] = self.editTicketStartTime
-                       
+                        
                         transaction.updateData([self.finalTicketID: cancelBookingObject], forDocument: refCancell1)
-                      
+                        
                         
                         
                         if self.bookedStartSeats > 0  {
@@ -622,8 +640,8 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         }
                         
                         
-                       
-//
+                        
+                        //
                     }
                     
                 }
@@ -631,33 +649,33 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             let dictionary = ["bookingDate": self.todayDate, "bookingAgentID": CurrentUserInfo.userID!, "adult": adultVal, "minor": minorVal, "customerName": customerName, "customePhone": customePhone, "tripStartTime": self.tripStartTime,"tripReturnTime": tripReturnTime,"ticketID":self.finalTicketID,"startDeparting":self.isStatTimeSort] as [String : Any]
             let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
             self.jsonString = String(data: jsonData!, encoding: .utf8)!
-
-//            DispatchQueue.main.async {
-//                return nil
-//                let currentBookingSeats = (Int(self.txtAdults.text!) ?? 0) +  (Int(self.txtMinor.text!) ?? 0)
-//            }
             
-//
-//                if (self.taxiData["totalSeats"] as? Int ?? 0) < (self.bookedStartSeats + currentBookingSeats ) {
-//                    let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-//                    SwiftMessages.show(view: vW)
-//                    return nil
-//                }
-//            }
-           
+            //            DispatchQueue.main.async {
+            //                return nil
+            //                let currentBookingSeats = (Int(self.txtAdults.text!) ?? 0) +  (Int(self.txtMinor.text!) ?? 0)
+            //            }
+            
+            //
+            //                if (self.taxiData["totalSeats"] as? Int ?? 0) < (self.bookedStartSeats + currentBookingSeats ) {
+            //                    let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+            //                    SwiftMessages.show(view: vW)
+            //                    return nil
+            //                }
+            //            }
+            
             
             print("pithreeeee")
             
             
             print("pithreee4")
             
-//            let sfDocument: DocumentSnapshot
-//            do {
-//                   try sfDocument = transaction.getDocument(bookingRef)
-//               } catch let fetchError as NSError {
-//                error?.pointee = fetchError
-//                   return nil
-//               }
+            //            let sfDocument: DocumentSnapshot
+            //            do {
+            //                   try sfDocument = transaction.getDocument(bookingRef)
+            //               } catch let fetchError as NSError {
+            //                error?.pointee = fetchError
+            //                   return nil
+            //               }
             
             return nil
         } completion: { (object, error) in
@@ -673,202 +691,202 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 vc.customerPhone = customePhone
                 vc.dataDict = self.jsonString
                 vc.ticketID = self.finalTicketID
-
+                
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             
-           
+            
         }
-
         
         
         
-//        bookingRef.getDocument { (document, error) in
-//            Utility.hideActivityIndicator()
-//            if let document = document, document.exists {
-//                let data : NSDictionary = document.data()! as NSDictionary
-//                print(data)
-//
-//                var returnTimingArray = NSArray()
-//                var startTimingArray = NSArray()
-//                print(self.ticketData)
-//
-//                var isDeparting : Bool = true
-//                if self.isTicketEdit {
-//                    isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
-//                }
-//                else {
-//                    isDeparting = self.isStatTimeSort
-//                }
-//
-//                if  isDeparting {
-//                    returnTimingArray = (data["returnTimingList"] as! NSArray)
-//                    startTimingArray = (data["timingList"] as! NSArray)
-//                }
-//                else {
-//                    returnTimingArray = (data["timingList"] as! NSArray)
-//                    startTimingArray = (data["returnTimingList"] as! NSArray)
-//                }
-//
-//                for index in 0...startTimingArray.count - 1 {
-//                    let data = startTimingArray.object(at: index) as! NSDictionary
-//                    if (data["time"] as! String) == self.txtStartTime.text{
-//
-//                        if self.isTicketEdit {
-//                            self.startAvailableSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
-//                        }
-//                        else {
-//                            self.startAvailableSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
-//                        }
-//
-//                        print(self.startAvailableSeats)
-//                        break
-//
-//                    }
-//                }
-//                for index in 0...returnTimingArray.count - 1 {
-//                    let data = returnTimingArray.object(at: index) as! NSDictionary
-//                    if (data["time"] as! String) == self.txtReturnTime.text{
-//
-//                        if self.isTicketEdit {
-//                            self.returnAvailableSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
-//                        }
-//                        else {
-//                            self.returnAvailableSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
-//
-//                        }
-//
-//                        print(self.returnAvailableSeats)
-//                        break
-//
-//                    }
-//                }
-//
-//
-//                if self.isTicketEdit {
-//
-//                    var adultVal = String()
-//                    var minorVal = String()
-//
-//                    adultVal = (self.ticketData["adult"] as! String)
-//                    minorVal = (self.ticketData["minor"] as! String)
-//
-//                    let alreadyBookedPax =  Int(adultVal)! + Int(minorVal)!
-//
-//                    var totalSeats : Int = 0
-//                    totalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
-//
-//                    let startTime = self.txtStartTime.text!
-//                    let returnTime = self.txtReturnTime.text!
-//                    print(self.selectedDate)
-//                    DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: startTime, timeType: "tripStartTime", startDeparting: isDeparting, completion: { count , backtime in
-//                        print(count)
-//
-//                        var newAdultVal = String()
-//                        var newMinorVal = String()
-//
-//                        if self.txtAdults.text! == "" {
-//                            newAdultVal = "0"
-//                        }
-//                        else {
-//                            newAdultVal = self.txtAdults.text!
-//                        }
-//
-//                        if self.txtMinor.text! == "" {
-//                            newMinorVal = "0"
-//                        }
-//                        else {
-//                            newMinorVal = self.txtMinor.text!
-//                        }
-//                        let totalPax = (Int(newAdultVal)! + Int(newMinorVal)!)
-//
-//                        if totalSeats - (count - alreadyBookedPax)  >= totalPax {
-//                            DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: returnTime, timeType: "tripReturnTime", startDeparting: isDeparting, completion: { count , backtime in
-//
-//                                print(count)
-//                                if totalSeats - (count - alreadyBookedPax) >= totalPax {
-//                                    self.cancelBooking()
-//                                }
-//                                else {
-//                                    let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-//                                    SwiftMessages.show(view: vW)
-//                                }
-//
-//                            })
-//                        }
-//                        else {
-//                            let vW = Utility.displaySwiftAlert("", "Not enough start seats", type: SwiftAlertType.error.rawValue)
-//                            SwiftMessages.show(view: vW)
-//                        }
-//                    })
-//
-//                }
-//                else {
-//                    if NetworkMonitor.shared.isReachable {
-//
-//                        var totalSeats : Int = 0
-//                        if self.isTicketEdit {
-//                            totalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
-//                        }
-//                        else {
-//                            totalSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber)
-//                        }
-//
-//                        let startTime = self.txtStartTime.text!
-//                        let returnTime = self.txtReturnTime.text!
-//                        print(self.selectedDate)
-//                        DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: startTime, timeType: "tripStartTime", startDeparting: isDeparting, completion: { count , backtime in
-//                            print(count)
-//
-//                            var newAdultVal = String()
-//                            var newMinorVal = String()
-//
-//                            if self.txtAdults.text! == "" {
-//                                newAdultVal = "0"
-//                            }
-//                            else {
-//                                newAdultVal = self.txtAdults.text!
-//                            }
-//
-//                            if self.txtMinor.text! == "" {
-//                                newMinorVal = "0"
-//                            }
-//                            else {
-//                                newMinorVal = self.txtMinor.text!
-//                            }
-//                            let totalPax = (Int(newAdultVal)! + Int(newMinorVal)!)
-//
-//                            if totalSeats - count >= totalPax {
-//                                DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: returnTime, timeType: "tripReturnTime", startDeparting: isDeparting, completion: { count , backtime in
-//
-//                                    print(count)
-//                                    if totalSeats - count >= totalPax {
-//                                        self.createBooking()
-//                                    }
-//                                    else {
-//                                        let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-//                                        SwiftMessages.show(view: vW)
-//                                    }
-//
-//                                })
-//                            }
-//                            else {
-//                                let vW = Utility.displaySwiftAlert("", "Not enough start seats", type: SwiftAlertType.error.rawValue)
-//                                SwiftMessages.show(view: vW)
-//                            }
-//                        })
-//                    }
-//                    else {
-//                        let vW = Utility.displaySwiftAlert("", "No Internet Connection", type: SwiftAlertType.error.rawValue)
-//                        SwiftMessages.show(view: vW)
-//                    }
-//
-//                }
-//
-//            }
-//        }
         
-//    }
+        //        bookingRef.getDocument { (document, error) in
+        //            Utility.hideActivityIndicator()
+        //            if let document = document, document.exists {
+        //                let data : NSDictionary = document.data()! as NSDictionary
+        //                print(data)
+        //
+        //                var returnTimingArray = NSArray()
+        //                var startTimingArray = NSArray()
+        //                print(self.ticketData)
+        //
+        //                var isDeparting : Bool = true
+        //                if self.isTicketEdit {
+        //                    isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
+        //                }
+        //                else {
+        //                    isDeparting = self.isStatTimeSort
+        //                }
+        //
+        //                if  isDeparting {
+        //                    returnTimingArray = (data["returnTimingList"] as! NSArray)
+        //                    startTimingArray = (data["timingList"] as! NSArray)
+        //                }
+        //                else {
+        //                    returnTimingArray = (data["timingList"] as! NSArray)
+        //                    startTimingArray = (data["returnTimingList"] as! NSArray)
+        //                }
+        //
+        //                for index in 0...startTimingArray.count - 1 {
+        //                    let data = startTimingArray.object(at: index) as! NSDictionary
+        //                    if (data["time"] as! String) == self.txtStartTime.text{
+        //
+        //                        if self.isTicketEdit {
+        //                            self.startAvailableSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
+        //                        }
+        //                        else {
+        //                            self.startAvailableSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
+        //                        }
+        //
+        //                        print(self.startAvailableSeats)
+        //                        break
+        //
+        //                    }
+        //                }
+        //                for index in 0...returnTimingArray.count - 1 {
+        //                    let data = returnTimingArray.object(at: index) as! NSDictionary
+        //                    if (data["time"] as! String) == self.txtReturnTime.text{
+        //
+        //                        if self.isTicketEdit {
+        //                            self.returnAvailableSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
+        //                        }
+        //                        else {
+        //                            self.returnAvailableSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber) - Int(truncating: data["alreadyBooked"] as! NSNumber)
+        //
+        //                        }
+        //
+        //                        print(self.returnAvailableSeats)
+        //                        break
+        //
+        //                    }
+        //                }
+        //
+        //
+        //                if self.isTicketEdit {
+        //
+        //                    var adultVal = String()
+        //                    var minorVal = String()
+        //
+        //                    adultVal = (self.ticketData["adult"] as! String)
+        //                    minorVal = (self.ticketData["minor"] as! String)
+        //
+        //                    let alreadyBookedPax =  Int(adultVal)! + Int(minorVal)!
+        //
+        //                    var totalSeats : Int = 0
+        //                    totalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
+        //
+        //                    let startTime = self.txtStartTime.text!
+        //                    let returnTime = self.txtReturnTime.text!
+        //                    print(self.selectedDate)
+        //                    DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: startTime, timeType: "tripStartTime", startDeparting: isDeparting, completion: { count , backtime in
+        //                        print(count)
+        //
+        //                        var newAdultVal = String()
+        //                        var newMinorVal = String()
+        //
+        //                        if self.txtAdults.text! == "" {
+        //                            newAdultVal = "0"
+        //                        }
+        //                        else {
+        //                            newAdultVal = self.txtAdults.text!
+        //                        }
+        //
+        //                        if self.txtMinor.text! == "" {
+        //                            newMinorVal = "0"
+        //                        }
+        //                        else {
+        //                            newMinorVal = self.txtMinor.text!
+        //                        }
+        //                        let totalPax = (Int(newAdultVal)! + Int(newMinorVal)!)
+        //
+        //                        if totalSeats - (count - alreadyBookedPax)  >= totalPax {
+        //                            DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: returnTime, timeType: "tripReturnTime", startDeparting: isDeparting, completion: { count , backtime in
+        //
+        //                                print(count)
+        //                                if totalSeats - (count - alreadyBookedPax) >= totalPax {
+        //                                    self.cancelBooking()
+        //                                }
+        //                                else {
+        //                                    let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+        //                                    SwiftMessages.show(view: vW)
+        //                                }
+        //
+        //                            })
+        //                        }
+        //                        else {
+        //                            let vW = Utility.displaySwiftAlert("", "Not enough start seats", type: SwiftAlertType.error.rawValue)
+        //                            SwiftMessages.show(view: vW)
+        //                        }
+        //                    })
+        //
+        //                }
+        //                else {
+        //                    if NetworkMonitor.shared.isReachable {
+        //
+        //                        var totalSeats : Int = 0
+        //                        if self.isTicketEdit {
+        //                            totalSeats = Int(truncating: self.taxiData["totalSeats"] as! NSNumber)
+        //                        }
+        //                        else {
+        //                            totalSeats = Int(truncating: self.taxiData["TotalSeats"] as! NSNumber)
+        //                        }
+        //
+        //                        let startTime = self.txtStartTime.text!
+        //                        let returnTime = self.txtReturnTime.text!
+        //                        print(self.selectedDate)
+        //                        DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: startTime, timeType: "tripStartTime", startDeparting: isDeparting, completion: { count , backtime in
+        //                            print(count)
+        //
+        //                            var newAdultVal = String()
+        //                            var newMinorVal = String()
+        //
+        //                            if self.txtAdults.text! == "" {
+        //                                newAdultVal = "0"
+        //                            }
+        //                            else {
+        //                                newAdultVal = self.txtAdults.text!
+        //                            }
+        //
+        //                            if self.txtMinor.text! == "" {
+        //                                newMinorVal = "0"
+        //                            }
+        //                            else {
+        //                                newMinorVal = self.txtMinor.text!
+        //                            }
+        //                            let totalPax = (Int(newAdultVal)! + Int(newMinorVal)!)
+        //
+        //                            if totalSeats - count >= totalPax {
+        //                                DatabseManager.getTicketCount(selectedDate: self.selectedDate, ticketTime: returnTime, timeType: "tripReturnTime", startDeparting: isDeparting, completion: { count , backtime in
+        //
+        //                                    print(count)
+        //                                    if totalSeats - count >= totalPax {
+        //                                        self.createBooking()
+        //                                    }
+        //                                    else {
+        //                                        let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+        //                                        SwiftMessages.show(view: vW)
+        //                                    }
+        //
+        //                                })
+        //                            }
+        //                            else {
+        //                                let vW = Utility.displaySwiftAlert("", "Not enough start seats", type: SwiftAlertType.error.rawValue)
+        //                                SwiftMessages.show(view: vW)
+        //                            }
+        //                        })
+        //                    }
+        //                    else {
+        //                        let vW = Utility.displaySwiftAlert("", "No Internet Connection", type: SwiftAlertType.error.rawValue)
+        //                        SwiftMessages.show(view: vW)
+        //                    }
+        //
+        //                }
+        //
+        //            }
+        //        }
+        
+        //    }
         
     }
     
@@ -936,14 +954,14 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             
         }
         
-       
+        
         let docRef = db.collection("todayStat").document(taxiIDVal)
-
+        
         docRef.getDocument { (document, error) in
             if let document = document, document.exists {
                 self.taxiData = document.data()! as NSDictionary
                 print(self.taxiData)
- 
+                
                 let isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
                 
                 if  isDeparting {
@@ -957,9 +975,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 print(self.tripStartTimeArray)
                 print(self.tripReturnTimeArray)
             }
-      }
+        }
     }
- 
+    
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool {
         return false
     }
@@ -1012,7 +1030,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
     func cancelBookedTicketStat() {
         
         let db = Firestore.firestore()
-//        let ticketID = (ticketData["ticketID"] as! String)
+        //        let ticketID = (ticketData["ticketID"] as! String)
         
         //Update Seats
         let tripReturnTime = (ticketData["tripReturnTime"] as! String)
@@ -1043,21 +1061,21 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         print(tripReturnTime)
         print(tripStartTime)
         print(ticketData)
-
+        
         
         docRef.getDocument { (document, error) in
             Utility.hideActivityIndicator()
             if let document = document, document.exists {
                 let todayData : NSDictionary = document.data()! as NSDictionary
-               
+                
                 
                 var startTimeArray = NSMutableArray()
                 var returnTimeArray = NSMutableArray()
                 let isStatSort = (self.ticketData["startDeparting"] as! Bool)
                 
                 if isStatSort {
-                     startTimeArray = todayData["timingList"] as! NSMutableArray
-                     returnTimeArray = todayData["returnTimingList"] as! NSMutableArray
+                    startTimeArray = todayData["timingList"] as! NSMutableArray
+                    returnTimeArray = todayData["returnTimingList"] as! NSMutableArray
                 }
                 else {
                     startTimeArray = todayData["returnTimingList"] as! NSMutableArray
@@ -1093,7 +1111,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         if newCount <= 0 {
                             newCount = 0
                         }
-
+                        
                         let newData : NSDictionary = ["alreadyBooked" :  newCount, "time" : tripReturnTime]
                         returnTimeArray.replaceObject(at: index, with: newData)
                         break
@@ -1192,7 +1210,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
     func createBooking(current:Int) -> Dictionary<String,Any>{
         totalPaxToBook = 0
         let db = Firestore.firestore()
-//      let todayDate = Utility.getTodayDateString()
+        //      let todayDate = Utility.getTodayDateString()
         
         let timestamp = NSDate().timeIntervalSince1970
         let intVal : Int = Int(timestamp)
@@ -1215,7 +1233,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         else {
             adultVal = txtAdults.text!
         }
-
+        
         if txtMinor.text! == "" {
             minorVal = "0"
         }
@@ -1263,24 +1281,24 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         
         userName = txtName.text!
         let numVal = String("\(intVal)")
-
+        
         finalTicketID = String("\(userName.prefix(4))\("-")\(numVal.suffix(4))")
         print(finalTicketID)
-
-//        totalPaxToBook = Int(adultVal)! + Int(minorVal)!
+        
+        //        totalPaxToBook = Int(adultVal)! + Int(minorVal)!
         
         if current <= 0 {
             let vW = Utility.displaySwiftAlert("", "Passenger count must atleast one." , type: SwiftAlertType.error.rawValue)
             SwiftMessages.show(view: vW)
         }
-//        else if (Int(adultVal)! + Int(minorVal)!) > startAvailableSeats  {
-//            let vW = Utility.displaySwiftAlert("", String(format: "Only %d Seats avaibale in start time", startAvailableSeats) , type: SwiftAlertType.error.rawValue)
-//            SwiftMessages.show(view: vW)
-//        }
-//        else  if (Int(adultVal)! + Int(minorVal)!) > returnAvailableSeats  {
-//            let vW = Utility.displaySwiftAlert("", String(format: "Only %d Seats avaibale in return time", returnAvailableSeats) , type: SwiftAlertType.error.rawValue)
-//            SwiftMessages.show(view: vW)
-//        }
+        //        else if (Int(adultVal)! + Int(minorVal)!) > startAvailableSeats  {
+        //            let vW = Utility.displaySwiftAlert("", String(format: "Only %d Seats avaibale in start time", startAvailableSeats) , type: SwiftAlertType.error.rawValue)
+        //            SwiftMessages.show(view: vW)
+        //        }
+        //        else  if (Int(adultVal)! + Int(minorVal)!) > returnAvailableSeats  {
+        //            let vW = Utility.displaySwiftAlert("", String(format: "Only %d Seats avaibale in return time", returnAvailableSeats) , type: SwiftAlertType.error.rawValue)
+        //            SwiftMessages.show(view: vW)
+        //        }
         else {
             let currentAppVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
             let deviceIdiom = UIScreen.main.traitCollection.userInterfaceIdiom
@@ -1300,19 +1318,19 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 deviceType = "Unspecified"
                 print("Unspecified UI idiom")
             }
-
+            
             
             print(deviceIdiom)
             print(currentAppVersion!)
             
             
-           
-//            Utility.showActivityIndicator()
+            
+            //            Utility.showActivityIndicator()
             let taxiIDVal = String("\(taxiID)\(todayDateString)")
-//            print("Document added with")
-//
-//            db.collection("manageBooking").document(finalTicketID).setData(
-             return [
+            //            print("Document added with")
+            //
+            //            db.collection("manageBooking").document(finalTicketID).setData(
+            return [
                 "bookingDate": todayDate,
                 "bookingAgentID": agentID,
                 "adult" : adultVal,
@@ -1340,70 +1358,70 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 "isRoundTrip":isRoundTrip,
                 "squareCode":txtSquareCode.text!
             ]
-//            ) { err in
-//                Utility.hideActivityIndicator()
-//                let dictionary = ["bookingDate": self.todayDate, "bookingAgentID": CurrentUserInfo.userID!, "adult": self.txtAdults.text!, "minor": self.txtMinor.text!, "customerName": self.txtName.text!, "customePhone": self.txtPhone.text!, "tripStartTime": self.tripStartTime,"tripReturnTime": self.txtReturnTime.text!,"ticketID":self.finalTicketID,"startDeparting":self.isStatTimeSort] as [String : Any]
-//
-//                let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
-//                self.jsonString = String(data: jsonData!, encoding: .utf8)!
-//                print(self.jsonString)
-//
-//
-//                if let err = err {
-//                    Utility.hideActivityIndicator()
-//                    let vW = Utility.displaySwiftAlert("",err.localizedDescription, type: SwiftAlertType.error.rawValue)
-//                    SwiftMessages.show(view: vW)
-//                    print("Error adding document: \(err)")
-//                } else {
-////                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-////                        self.updateTodayStat(taxiIDVal)
-////                    }
-//
-//
-//                    let vW = Utility.displaySwiftAlert("","Ticket Created Success", type: SwiftAlertType.success.rawValue)
-//                    SwiftMessages.show(view: vW)
-//
-//
-//                    print("Document successfully updated")
-//                    var isDeparting : Bool = true
-//                    if self.isTicketEdit {
-//                        isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
-//                    }
-//                    else {
-//                        isDeparting = self.isStatTimeSort
-//                    }
-//                    let vc = self.storyboard!.instantiateViewController(withIdentifier: "BookingConfirmationVC") as! BookingConfirmationVC
-//                    vc.dataDict = self.jsonString
-//                    vc.customerEmail = self.txtEmail.text!
-//                    vc.customerPhone = self.txtPhone.text!
-//
-//                    vc.tripStartTime = self.txtStartTime.text!
-//                    vc.tripEndTime = self.txtReturnTime.text!
-//                    vc.customerName = self.txtName.text!
-//                    vc.comment = self.txtComment.text!
-//                    vc.departureDate = self.todayDate
-//                    vc.totalPaxToBook = self.totalPaxToBook
-//                    vc.isTicketEdit = self.isTicketEdit
-//                    vc.taxiTotalSeats = self.taxiTotalSeats
-//                    vc.ticketID = self.finalTicketID
-//                    vc.taxiIDVal = taxiIDVal
-//                    vc.isDeparting = isDeparting
-//                    self.navigationController?.pushViewController(vc, animated: true)
-//
-//
-//
-//                }
-//            }
+            //            ) { err in
+            //                Utility.hideActivityIndicator()
+            //                let dictionary = ["bookingDate": self.todayDate, "bookingAgentID": CurrentUserInfo.userID!, "adult": self.txtAdults.text!, "minor": self.txtMinor.text!, "customerName": self.txtName.text!, "customePhone": self.txtPhone.text!, "tripStartTime": self.tripStartTime,"tripReturnTime": self.txtReturnTime.text!,"ticketID":self.finalTicketID,"startDeparting":self.isStatTimeSort] as [String : Any]
+            //
+            //                let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
+            //                self.jsonString = String(data: jsonData!, encoding: .utf8)!
+            //                print(self.jsonString)
+            //
+            //
+            //                if let err = err {
+            //                    Utility.hideActivityIndicator()
+            //                    let vW = Utility.displaySwiftAlert("",err.localizedDescription, type: SwiftAlertType.error.rawValue)
+            //                    SwiftMessages.show(view: vW)
+            //                    print("Error adding document: \(err)")
+            //                } else {
+            ////                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            ////                        self.updateTodayStat(taxiIDVal)
+            ////                    }
+            //
+            //
+            //                    let vW = Utility.displaySwiftAlert("","Ticket Created Success", type: SwiftAlertType.success.rawValue)
+            //                    SwiftMessages.show(view: vW)
+            //
+            //
+            //                    print("Document successfully updated")
+            //                    var isDeparting : Bool = true
+            //                    if self.isTicketEdit {
+            //                        isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
+            //                    }
+            //                    else {
+            //                        isDeparting = self.isStatTimeSort
+            //                    }
+            //                    let vc = self.storyboard!.instantiateViewController(withIdentifier: "BookingConfirmationVC") as! BookingConfirmationVC
+            //                    vc.dataDict = self.jsonString
+            //                    vc.customerEmail = self.txtEmail.text!
+            //                    vc.customerPhone = self.txtPhone.text!
+            //
+            //                    vc.tripStartTime = self.txtStartTime.text!
+            //                    vc.tripEndTime = self.txtReturnTime.text!
+            //                    vc.customerName = self.txtName.text!
+            //                    vc.comment = self.txtComment.text!
+            //                    vc.departureDate = self.todayDate
+            //                    vc.totalPaxToBook = self.totalPaxToBook
+            //                    vc.isTicketEdit = self.isTicketEdit
+            //                    vc.taxiTotalSeats = self.taxiTotalSeats
+            //                    vc.ticketID = self.finalTicketID
+            //                    vc.taxiIDVal = taxiIDVal
+            //                    vc.isDeparting = isDeparting
+            //                    self.navigationController?.pushViewController(vc, animated: true)
+            //
+            //
+            //
+            //                }
+            //            }
         }
         return ["":""]
     }
-
+    
     func updateTodayStat(_ taxiIDVal : String)  {
         let db = Firestore.firestore()
         
         let docRef = db.collection("todayStat").document(taxiIDVal)
         var flag : Bool = true
-
+        
         docRef.getDocument { [self] (document, error) in
             
             if let document = document, document.exists {
@@ -1419,7 +1437,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 else {
                     isDeparting = self.isStatTimeSort
                 }
- 
+                
                 if isDeparting {
                     startTimeArray = dataDescription!["timingList"] as! NSMutableArray
                     returnTimeArray = dataDescription!["returnTimingList"] as! NSMutableArray
@@ -1453,7 +1471,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 for index in 0..<returnTimeArray.count {
                     let data = returnTimeArray.object(at: index) as! NSDictionary
                     if (data["time"] as! String) == self.txtReturnTime.text! {
-                         let alreadyBooked = (data["alreadyBooked"] as! Int)
+                        let alreadyBooked = (data["alreadyBooked"] as! Int)
                         
                         if self.taxiTotalSeats > (totalPaxToBook + alreadyBooked) {
                             let newData : NSDictionary = ["alreadyBooked" :  alreadyBooked + self.totalPaxToBook, "time" : self.txtReturnTime.text!]
@@ -1463,7 +1481,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         }
                         else {
                             flag = false
-                           // self.removeTicketFromDB()
+                            // self.removeTicketFromDB()
                         }
                     }
                 }
@@ -1492,7 +1510,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                                 SwiftMessages.show(view: vW)
                                 print("Error updating document: \(err)")
                                 //Remove Ticket
-                              //  self.removeTicketFromDB()
+                                //  self.removeTicketFromDB()
                                 
                             } else {
                                 let vW = Utility.displaySwiftAlert("","Count updating success", type: SwiftAlertType.success.rawValue)
@@ -1516,7 +1534,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     }
                 }
             } else {
-               // self.removeTicketFromDB()
+                // self.removeTicketFromDB()
                 Utility.hideActivityIndicator()
                 print("Document does not exist")
             }
@@ -1541,9 +1559,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         let vW = Utility.displaySwiftAlert("","Error in ticket creating,try again!", type: SwiftAlertType.error.rawValue)
         SwiftMessages.show(view: vW)
     }
- 
     
-
+    
+    
 }
 
 
@@ -1557,9 +1575,9 @@ extension AgentBookingVC {
         var count = 0
         
         if !BookingFile.isEmpty {
-           
-         _ = BookingFile.mapValues { (element)  in
-               let signleDocument = element as? Dictionary<String,Any>
+            
+            _ = BookingFile.mapValues { (element)  in
+                let signleDocument = element as? Dictionary<String,Any>
                 
                 if (signleDocument?["status"] as? String != "Cancelled") {
                     
