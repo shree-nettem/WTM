@@ -664,11 +664,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             //            }
             
             
-            print("pithreeeee")
-            
-            
-            print("pithreee4")
-            
+         
             //            let sfDocument: DocumentSnapshot
             //            do {
             //                   try sfDocument = transaction.getDocument(bookingRef)
@@ -686,9 +682,28 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 print(error.localizedDescription)
             }
             if !self.jsonString.isEmpty {
+                var isDeparting : Bool = true
+                if self.isTicketEdit {
+                    isDeparting = (self.ticketData["startDeparting"] as? Bool) ?? true
+                }
+                else {
+                    isDeparting = self.isStatTimeSort
+                }
+                
+
                 let vc = self.storyboard!.instantiateViewController(withIdentifier: "BookingConfirmationVC") as! BookingConfirmationVC
                 vc.customerEmail = email
                 vc.customerPhone = customePhone
+                vc.tripStartTime = tripStartTime
+                vc.tripEndTime = tripReturnTime
+                vc.customerName = customerName
+                vc.comment = comment
+                vc.departureDate = self.todayDate
+                vc.totalPaxToBook = self.totalPaxToBook
+                vc.taxiIDVal = departurePostRef
+                vc.isTicketEdit = self.isTicketEdit
+                vc.taxiTotalSeats = self.taxiTotalSeats
+                vc.isDeparting = isDeparting
                 vc.dataDict = self.jsonString
                 vc.ticketID = self.finalTicketID
                 
