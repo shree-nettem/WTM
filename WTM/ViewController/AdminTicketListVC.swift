@@ -507,7 +507,7 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
             if isStatTimeSort {
 //                let bookingRef =   db.collection("manageBooking").whereField("bookingDate", isEqualTo: selectedDateVal).whereField("tripStartTime", isEqualTo: tripStartTime).whereField("startDeparting", isEqualTo: true).order(by: "bookingDateTimeStamp")
                 
-                let bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)\(tripStartTime)")
+                let bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)BS\(tripStartTime)")
                print("\(self.taxiData["ID"]!)\(selectedDateVal)\(tripStartTime)")
               print(bookingRef)
                 
@@ -650,7 +650,7 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
 //                        } else {
 //                            for document in querySnapshot!.documents {
 //                                let data = document.data()
-                let bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)\(tripStartTime)")
+                let bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)MB\(tripStartTime)")
                 
                 
                 
@@ -792,12 +792,19 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
 //                    } else {
 //                        for document in querySnapshot!.documents {
 //                            let data = document.data()
-            let bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)\(tripStartTime)")
+            var bookingRef:DocumentReference?
+            
+            if isStatTimeSort {
+                bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)BS\(tripStartTime)")
+            } else {
+                bookingRef = db.collection("bookings").document("\(self.taxiData["ID"]!)\(selectedDateVal)MB\(tripStartTime)")
+            }
+           
             
             
             
             let ticketArray =  NSMutableArray()
-            bookingRef.getDocument { (document, err) in
+            bookingRef!.getDocument { (document, err) in
                     Utility.hideActivityIndicator()
                     if let err = err {
                         print("Error getting documents: \(err)")
@@ -863,11 +870,20 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
         
         if let returnTime = data["tripReturnTime"] as? String {
             if returnTime != ""  {
-                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)\(returnTime)")
+                if isStatTimeSort {
+                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\(returnTime)")
+                } else {
+                    self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\(returnTime)")
+                }
             }
             
         }
-        self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)\( data["tripStartTime"] as! String)")
+        if isStatTimeSort {
+            self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\( data["tripStartTime"] as! String)")
+        } else {
+            self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\( data["tripStartTime"] as! String)")
+        }
+        
         
         //Update Seats
         let tripReturnTime = (data["tripReturnTime"] as! String)
