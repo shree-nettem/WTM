@@ -486,8 +486,8 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     "deviceIdiom":deviceType,
                     "isRoundTrip":self.isRoundTrip,
                     "squareCode":squareCode,
-                    "StartdocumentPath": departurePostRef,
-                    "returnDocumentPath": returnPostRef
+                    "startDocumentPath": departurePostRef,
+                    "returnDocumentPath": tripReturnTime != "" ? returnPostRef : ""
                 ] as [String : Any]
                 
                 
@@ -716,7 +716,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     
                 }
             }
-            let dictionary = ["bookingDate": self.todayDate, "bookingAgentID": CurrentUserInfo.userID!, "adult": adultVal, "minor": minorVal, "customerName": customerName, "customePhone": customePhone, "tripStartTime": self.tripStartTime,"tripReturnTime": tripReturnTime,"ticketID":self.finalTicketID,"startDeparting":self.isStatTimeSort , "StartdocumentPath": departurePostRef,"returnDocumentPath": returnPostRef] as [String : Any]
+            let dictionary = ["bookingDate": self.todayDate, "bookingAgentID": CurrentUserInfo.userID!, "adult": adultVal, "minor": minorVal, "customerName": customerName, "customePhone": customePhone, "tripStartTime": self.tripStartTime,"tripReturnTime": tripReturnTime,"ticketID":self.finalTicketID,"startDeparting":self.isStatTimeSort , "startDocumentPath": departurePostRef,"returnDocumentPath": tripReturnTime != "" ? returnPostRef : ""] as [String : Any]
             let jsonData = try? JSONSerialization.data(withJSONObject: dictionary, options: [])
             self.jsonString = String(data: jsonData!, encoding: .utf8)!
             
