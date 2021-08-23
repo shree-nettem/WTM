@@ -864,164 +864,196 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
         Utility.showActivityIndicator()
         let data = ticketListArray.object(at: selectedIndex) as! NSDictionary
         print(data)
-        let db = Firestore.firestore()
+//        let db = Firestore.firestore()
         let ticketID = (data["ticketID"] as! String)
         let taxiId = data["taxiID"] as! String
         
-        if let returnTime = data["tripReturnTime"] as? String {
-            if returnTime != ""  {
-                if isStatTimeSort {
-                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\(returnTime)")
-                } else {
-                    self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\(returnTime)")
-                }
-            }
-            
-        }
-        if isStatTimeSort {
+        if data["ticketDepartureSide"] as? String == "Bayside Beach" {
             self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\( data["tripStartTime"] as! String)")
+            if let returnTime = data["tripReturnTime"] as? String {
+            if returnTime != ""  {
+                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\(returnTime)")
+               
+            }
+            }
         } else {
             self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\( data["tripStartTime"] as! String)")
+            if let returnTime = data["tripReturnTime"] as? String {
+            if returnTime != ""  {
+                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\(returnTime)")
+               
+            }
+            }
         }
+//
+//        if isStatTimeSort {
+//            self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\( data["tripStartTime"] as! String)")
+//        } else {
+//            self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\( data["tripStartTime"] as! String)")
+//        }
+//
+//
+//        if let returnTime = data["tripReturnTime"] as? String {
+//            if returnTime != ""  {
+//                if isStatTimeSort {
+//                self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)MB\(returnTime)")
+//                } else {
+//                    self.updateTicketStatus(ticketID,"\(taxiId)\( data["bookingDate"] as! String)BS\(returnTime)")
+//                }
+//            }
+//
+//        }
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+            Utility.hideActivityIndicator()
+            let vW = Utility.displaySwiftAlert("", "Ticket Cancelled & Stat Updtes" , type: SwiftAlertType.success.rawValue)
+            SwiftMessages.show(view: vW)
+            
+            //self.getUpdatedTicketListFromDB()
+            
+            let vc = self.storyboard!.instantiateViewController(withIdentifier: "LoginWithPinVC") as! LoginWithPinVC
+            self.navigationController?.pushViewController(vc, animated: true)
+        }
+       
         
         
         //Update Seats
-        let tripReturnTime = (data["tripReturnTime"] as! String)
-        let tripStartTime = (data["tripStartTime"] as! String)
-        let taxiID = (data["taxiID"] as! String)
-        let todayDateString = (data["todayDateString"] as! String)
-        
-        let taxiIDVal = String("\(taxiID)\(todayDateString)")
-        let totalSeatsToCancel : Int = Int((data["adult"] as! String))! + Int((data["minor"] as! String))!
-        
-        let docRef = db.collection("todayStat").document(taxiIDVal)
-
-        
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let todayData : NSDictionary = document.data()! as NSDictionary
-                
-                
-                
-               // let startTimeArray : NSMutableArray = todayData["timingList"] as! NSMutableArray
-               // let returnTimeArray : NSMutableArray = todayData["returnTimingList"] as! NSMutableArray
-                
-                
-                let isStatSort = (data["startDeparting"] as! Bool)
-                
-                var startTimeArray = NSMutableArray()
-                var returnTimeArray = NSMutableArray()
- 
-                if isStatSort {
-                    startTimeArray = todayData["timingList"] as! NSMutableArray
-                    returnTimeArray = todayData["returnTimingList"] as! NSMutableArray
-                }
-                else {
-                    startTimeArray = todayData["returnTimingList"] as! NSMutableArray
-                    returnTimeArray = todayData["timingList"] as! NSMutableArray
-                }
-                
-                print(returnTimeArray)
-                print(startTimeArray)
-                for index in 0..<startTimeArray.count {
-                    let data = startTimeArray.object(at: index) as! NSDictionary
-                    if (data["time"] as! String) == tripStartTime {
-                        let alreadyBooked = (data["alreadyBooked"] as! Int)
-                        
-                        var newCount : Int = alreadyBooked - totalSeatsToCancel
-                        
-                        if newCount <= 0 {
-                            newCount = 0
-                        }
-                        
-                        print(startTimeArray.object(at: index) as! NSDictionary)
-                        let newData : NSDictionary = ["alreadyBooked" :  newCount, "time" : tripStartTime]
-                        
-                        print(startTimeArray.object(at: index) as! NSDictionary)
-                        print(newData)
-                        startTimeArray.replaceObject(at: index, with: newData)
-                        break
-                    }
-                }
-                for index in 0..<returnTimeArray.count {
-                    let data = returnTimeArray.object(at: index) as! NSDictionary
-                    if (data["time"] as! String) == tripReturnTime {
-                         let alreadyBooked = (data["alreadyBooked"] as! Int)
-                        
-                        var newCount : Int = alreadyBooked - totalSeatsToCancel
-                        
-                        if newCount <= 0 {
-                            newCount = 0
-                        }
-                        
-                        let newData : NSDictionary = ["alreadyBooked" :  newCount, "time" : tripReturnTime]
-                        returnTimeArray.replaceObject(at: index, with: newData)
-                        break
-                    }
-                }
-                
-                
-                var newStartArr = NSMutableArray()
-                var newReturnArr = NSMutableArray()
-                if isStatSort {
-                    newStartArr = startTimeArray
-                    newReturnArr = returnTimeArray
-                }
-                else {
-                    newStartArr = returnTimeArray
-                    newReturnArr = startTimeArray
-                }
-                
-                print(newStartArr)
-                print(newReturnArr)
-                
-                print(returnTimeArray)
-                print(startTimeArray)
-                
-                
-                docRef.updateData([
-                    "timingList":newStartArr,
-                    "returnTimingList":newReturnArr
-                ]) { err in
-                    Utility.hideActivityIndicator()
-                    if let err = err {
-                        print("Error updating document: \(err)")
-                        let vW = Utility.displaySwiftAlert("", "Error todayStat update, cancelling" , type: SwiftAlertType.error.rawValue)
-                        SwiftMessages.show(view: vW)
-                    } else {
-                        print("Document successfully updated")
-                        let vW = Utility.displaySwiftAlert("", "Ticket Cancelled & Stat Updtes" , type: SwiftAlertType.success.rawValue)
-                        SwiftMessages.show(view: vW)
-                        
-                        //self.getUpdatedTicketListFromDB()
-                        
-                        let vc = self.storyboard!.instantiateViewController(withIdentifier: "LoginWithPinVC") as! LoginWithPinVC
-                        self.navigationController?.pushViewController(vc, animated: true)
-                        
-                        /*
-                        if self.isFromAdmin {
-                            let vc = self.storyboard!.instantiateViewController(withIdentifier: "AgentDashboardVC") as! AgentDashboardVC
-                            vc.isFromAdmin = true
-                            vc.isAgentEditTicket = false
-                            Constant.currentUserFlow = "Admin"
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        }
-                        else {
-                            let vc = self.storyboard!.instantiateViewController(withIdentifier: "AgentDashboardVC") as! AgentDashboardVC
-                            vc.isFromAdmin = false
-                            vc.isAgentEditTicket = false
-                            Constant.currentUserFlow = "Agent"
-                            self.navigationController?.pushViewController(vc, animated: true)
-                        }
-                        */
-                        
-                    }
-                }
-            } else {
-                Utility.hideActivityIndicator()
-                print("Document does not exist")
-            }
-        }
+//        let tripReturnTime = (data["tripReturnTime"] as! String)
+//        let tripStartTime = (data["tripStartTime"] as! String)
+//        let taxiID = (data["taxiID"] as! String)
+//        let todayDateString = (data["todayDateString"] as! String)
+//
+//        let taxiIDVal = String("\(taxiID)\(todayDateString)")
+//        let totalSeatsToCancel : Int = Int((data["adult"] as! String))! + Int((data["minor"] as! String))!
+//
+//        let docRef = db.collection("todayStat").document(taxiIDVal)
+//
+//
+//        docRef.getDocument { (document, error) in
+//            if let document = document, document.exists {
+//                let todayData : NSDictionary = document.data()! as NSDictionary
+//
+//
+//
+//               // let startTimeArray : NSMutableArray = todayData["timingList"] as! NSMutableArray
+//               // let returnTimeArray : NSMutableArray = todayData["returnTimingList"] as! NSMutableArray
+//
+//
+//                let isStatSort = (data["startDeparting"] as! Bool)
+//
+//                var startTimeArray = NSMutableArray()
+//                var returnTimeArray = NSMutableArray()
+//
+//                if isStatSort {
+//                    startTimeArray = todayData["timingList"] as! NSMutableArray
+//                    returnTimeArray = todayData["returnTimingList"] as! NSMutableArray
+//                }
+//                else {
+//                    startTimeArray = todayData["returnTimingList"] as! NSMutableArray
+//                    returnTimeArray = todayData["timingList"] as! NSMutableArray
+//                }
+//
+//                print(returnTimeArray)
+//                print(startTimeArray)
+//                for index in 0..<startTimeArray.count {
+//                    let data = startTimeArray.object(at: index) as! NSDictionary
+//                    if (data["time"] as! String) == tripStartTime {
+//                        let alreadyBooked = (data["alreadyBooked"] as! Int)
+//
+//                        var newCount : Int = alreadyBooked - totalSeatsToCancel
+//
+//                        if newCount <= 0 {
+//                            newCount = 0
+//                        }
+//
+//                        print(startTimeArray.object(at: index) as! NSDictionary)
+//                        let newData : NSDictionary = ["alreadyBooked" :  newCount, "time" : tripStartTime]
+//
+//                        print(startTimeArray.object(at: index) as! NSDictionary)
+//                        print(newData)
+//                        startTimeArray.replaceObject(at: index, with: newData)
+//                        break
+//                    }
+//                }
+//                for index in 0..<returnTimeArray.count {
+//                    let data = returnTimeArray.object(at: index) as! NSDictionary
+//                    if (data["time"] as! String) == tripReturnTime {
+//                         let alreadyBooked = (data["alreadyBooked"] as! Int)
+//
+//                        var newCount : Int = alreadyBooked - totalSeatsToCancel
+//
+//                        if newCount <= 0 {
+//                            newCount = 0
+//                        }
+//
+//                        let newData : NSDictionary = ["alreadyBooked" :  newCount, "time" : tripReturnTime]
+//                        returnTimeArray.replaceObject(at: index, with: newData)
+//                        break
+//                    }
+//                }
+//
+//
+//                var newStartArr = NSMutableArray()
+//                var newReturnArr = NSMutableArray()
+//                if isStatSort {
+//                    newStartArr = startTimeArray
+//                    newReturnArr = returnTimeArray
+//                }
+//                else {
+//                    newStartArr = returnTimeArray
+//                    newReturnArr = startTimeArray
+//                }
+//
+//                print(newStartArr)
+//                print(newReturnArr)
+//
+//                print(returnTimeArray)
+//                print(startTimeArray)
+//
+//
+//                docRef.updateData([
+//                    "timingList":newStartArr,
+//                    "returnTimingList":newReturnArr
+//                ]) { err in
+//                    Utility.hideActivityIndicator()
+//                    if let err = err {
+//                        print("Error updating document: \(err)")
+//                        let vW = Utility.displaySwiftAlert("", "Error todayStat update, cancelling" , type: SwiftAlertType.error.rawValue)
+//                        SwiftMessages.show(view: vW)
+//                    } else {
+//                        print("Document successfully updated")
+//                        let vW = Utility.displaySwiftAlert("", "Ticket Cancelled & Stat Updtes" , type: SwiftAlertType.success.rawValue)
+//                        SwiftMessages.show(view: vW)
+//
+//                        //self.getUpdatedTicketListFromDB()
+//
+//                        let vc = self.storyboard!.instantiateViewController(withIdentifier: "LoginWithPinVC") as! LoginWithPinVC
+//                        self.navigationController?.pushViewController(vc, animated: true)
+//
+//                        /*
+//                        if self.isFromAdmin {
+//                            let vc = self.storyboard!.instantiateViewController(withIdentifier: "AgentDashboardVC") as! AgentDashboardVC
+//                            vc.isFromAdmin = true
+//                            vc.isAgentEditTicket = false
+//                            Constant.currentUserFlow = "Admin"
+//                            self.navigationController?.pushViewController(vc, animated: true)
+//                        }
+//                        else {
+//                            let vc = self.storyboard!.instantiateViewController(withIdentifier: "AgentDashboardVC") as! AgentDashboardVC
+//                            vc.isFromAdmin = false
+//                            vc.isAgentEditTicket = false
+//                            Constant.currentUserFlow = "Agent"
+//                            self.navigationController?.pushViewController(vc, animated: true)
+//                        }
+//                        */
+//
+//                    }
+//                }
+//            } else {
+//                Utility.hideActivityIndicator()
+//                print("Document does not exist")
+//            }
+//        }
         
         
     }

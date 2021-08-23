@@ -217,6 +217,16 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
         let tripStartTime = self.txtStartTime.text!
         let tripReturnTime = self.txtReturnTime.text!
         
+        var oldtripCount = 0
+        
+        if self.isTicketEdit {
+            let adult  = Int(ticketData["adult"] as! String)
+            let minor = Int(ticketData["minor"] as! String)
+            oldtripCount = (adult ?? 0) + (minor ?? 0)
+        }
+        
+        
+        
         
         let email = self.txtEmail.text!
         let comment = self.txtComment.text!
@@ -302,6 +312,9 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     
                     if self.isTicketEdit {
                         self.startAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedStartSeats
+                        if tripStartTime == self.editTicketStartTime {
+                        self.startAvailableSeats += oldtripCount
+                        }
                     } else {
                         self.startAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedStartSeats
                     }
@@ -327,6 +340,10 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     
                     if self.isTicketEdit {
                         self.returnAvailableSeats = (self.taxiData["totalSeats"] as? Int ?? 0) - self.bookedReturnSeats
+                        if tripReturnTime == self.editTicketReturnTime {
+                            self.returnAvailableSeats += oldtripCount
+                        }
+                        
                     } else {
                         self.returnAvailableSeats = (self.taxiData["TotalSeats"] as? Int ?? 0) - self.bookedReturnSeats
                     }
@@ -477,21 +494,30 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             
             
             if tripStartTime != self.editTicketStartTime {
-                if self.startAvailableSeats < self.currentBookingSeats {
-                    DispatchQueue.main.async {
-                        let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
-                        SwiftMessages.show(view: vW)
+                
+//                if self.isTicketEdit {
+//                } else {
+                    if self.startAvailableSeats < self.currentBookingSeats {
+                        DispatchQueue.main.async {
+                            let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
+                            SwiftMessages.show(view: vW)
+                        }
+                        return nil
                     }
-                    return nil
-                }
+//                }
+               
             } else  {
-                if self.taxiTotalSeats < self.currentBookingSeats {
-                    DispatchQueue.main.async {
-                        let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
-                        SwiftMessages.show(view: vW)
+//                if self.isTicketEdit {
+//                } else {
+                    if self.taxiTotalSeats < self.currentBookingSeats {
+                        DispatchQueue.main.async {
+                            let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
+                            SwiftMessages.show(view: vW)
+                        }
+                        return nil
                     }
-                    return nil
-                }
+//                }
+               
             }
             
             
@@ -499,21 +525,29 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             if self.isRoundTrip {
                 
                 if tripReturnTime != self.editTicketReturnTime {
-                    if self.returnAvailableSeats < self.currentBookingSeats {
-                        DispatchQueue.main.async {
-                            let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-                            SwiftMessages.show(view: vW)
+//                    if self.isTicketEdit {
+//                    } else {
+                        if self.returnAvailableSeats < self.currentBookingSeats {
+                            DispatchQueue.main.async {
+                                let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+                                SwiftMessages.show(view: vW)
+                            }
+                            return nil
                         }
-                        return nil
-                    }
+//                    }
+                    
                 }  else  {
-                    if self.taxiTotalSeats < self.currentBookingSeats {
-                        DispatchQueue.main.async {
-                            let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
-                            SwiftMessages.show(view: vW)
+//                    if self.isTicketEdit {
+//                    } else {
+                        if self.taxiTotalSeats < self.currentBookingSeats {
+                            DispatchQueue.main.async {
+                                let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
+                                SwiftMessages.show(view: vW)
+                            }
+                            return nil
                         }
-                        return nil
-                    }
+//                    }
+                   
                 }
                 
                 
@@ -527,7 +561,22 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         
                         
                         let bookingDateCancel = (self.ticketData["bookingDate"] as! String)
-                        let departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)\(self.editTicketStartTime)")
+                        var departureCancelPostRef = String()
+                        
+                        if self.ticketData["ticketDepartureSide"] as? String == "Bayside Beach" {
+                            
+                            departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)BS\(self.editTicketStartTime)")
+                        } else {
+                            departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)MB\(self.editTicketStartTime)")
+                        }
+                        
+//                        if self.isStatTimeSort {
+//                            departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)BS\(self.editTicketStartTime)")
+//                        } else  {
+//                            departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)MB\(self.editTicketStartTime)")
+//                        }
+                            
+                        
                         let refCancell1 =  db.collection("bookings").document(departureCancelPostRef)
                         
                         var cancelBookingObject = bookingObject
@@ -559,7 +608,20 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                     } else {
                         
                         let bookingDateCancel = (self.ticketData["bookingDate"] as! String)
-                        let returnCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)\(self.editTicketReturnTime)")
+                        
+                        var returnCancelPostRef = String()
+                        if self.ticketData["ticketDepartureSide"] as? String == "Bayside Beach" {
+                            
+                            returnCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)MB\(self.editTicketReturnTime)")
+                        } else {
+                            returnCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)BS\(self.editTicketReturnTime)")
+                        }
+//                        if self.isStatTimeSort {
+//                            returnCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)MB\(self.editTicketReturnTime)")
+//                        } else {
+//                            returnCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)BS\(self.editTicketReturnTime)")
+//                        }
+                       
                         let refCancell2 =  db.collection("bookings").document(returnCancelPostRef)
                         
                         var cancelBookingObject = bookingObject
@@ -622,7 +684,13 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         
                         
                         let bookingDateCancel = (self.ticketData["bookingDate"] as! String)
-                        let departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)\(self.editTicketStartTime)")
+                        var departureCancelPostRef = String()
+                        if self.ticketData["ticketDepartureSide"] as? String == "Bayside Beach" {
+                             departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)BS\(self.editTicketStartTime)")
+                        } else {
+                            departureCancelPostRef = String("\(self.ticketData["taxiID"]!)\(bookingDateCancel)MB\(self.editTicketStartTime)")
+                        }
+                        
                         let refCancell1 =  db.collection("bookings").document(departureCancelPostRef)
                         
                         var cancelBookingObject = bookingObject
