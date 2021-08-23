@@ -1239,8 +1239,10 @@ class AdminTicketListVC: UIViewController , UITableViewDelegate, UITableViewData
             let tripReturnTime = (data["tripReturnTime"] as! String)
             let ticketID = (data["ticketID"] as! String)
             let isStartDeparting = (data["startDeparting"] as! Bool)
-            
-            let dictionary = ["bookingDate": todayDate, "bookingAgentID": bookingAgentID, "adult": adult, "minor": minor, "customerName": customerName, "customePhone": customePhone, "tripStartTime": tripStartTime,"tripReturnTime": tripReturnTime,"ticketID":ticketID,"startDeparting":isStartDeparting] as [String : Any]
+            let departurePostRef = (data["StartdocumentPath"] as? String ?? "")
+            let returnPostRef = (data["returnDocumentPath"] as? String ?? "")
+            let dictionary = ["bookingDate": todayDate, "bookingAgentID": bookingAgentID, "adult": adult, "minor": minor, "customerName": customerName, "customePhone": customePhone, "tripStartTime": tripStartTime,"tripReturnTime": tripReturnTime,"ticketID":ticketID,"startDeparting":isStartDeparting,"StartdocumentPath": departurePostRef,"returnDocumentPath": returnPostRef
+            ] as [String : Any]
             
             
             
