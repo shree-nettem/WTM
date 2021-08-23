@@ -150,6 +150,10 @@ class TicketScannedDetailVC: UIViewController {
     
     @IBAction func onClickApproveAcn(_ sender : UIButton)  {
         
+        if ticketID != "" {
+            
+       
+        
         let btnTag = sender.tag
         let db = Firestore.firestore()
         let ticketRef = db.collection("bookings").document(ticketID)
@@ -360,6 +364,14 @@ class TicketScannedDetailVC: UIViewController {
          }
          }
          */
+        
+        } else {
+            DispatchQueue.main.async {
+                let vW = Utility.displaySwiftAlert("", "Error Occured" , type: SwiftAlertType.error.rawValue)
+                SwiftMessages.show(view: vW)
+            }
+            
+        }
     }
     
     @IBAction func onClickRejectAcn()  {

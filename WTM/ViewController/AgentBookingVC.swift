@@ -372,7 +372,16 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 DispatchQueue.main.async {
                     let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
                     SwiftMessages.show(view: vW)
+                    
                 }
+                let customError = NSError(
+                    domain: "AppErrorDomain",
+                    code: -1,
+                    userInfo: [
+                        NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot"
+                    ]
+                )
+                error?.pointee = customError
                 return nil
             }
             
@@ -503,8 +512,18 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         DispatchQueue.main.async {
                             let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
                             SwiftMessages.show(view: vW)
+                            
                         }
+                        let customError = NSError(
+                            domain: "AppErrorDomain",
+                            code: -1,
+                            userInfo: [
+                                NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot"
+                            ]
+                        )
+                        error?.pointee = customError
                         return nil
+
                     }
 //                }
                
@@ -515,8 +534,18 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                         DispatchQueue.main.async {
                             let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
                             SwiftMessages.show(view: vW)
+                            
                         }
+                        let customError = NSError(
+                            domain: "AppErrorDomain",
+                            code: -1,
+                            userInfo: [
+                                NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot"
+                            ]
+                        )
+                        error?.pointee = customError
                         return nil
+
                     }
 //                }
                
@@ -533,8 +562,18 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                             DispatchQueue.main.async {
                                 let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
                                 SwiftMessages.show(view: vW)
+                                
                             }
+                            let customError = NSError(
+                                domain: "AppErrorDomain",
+                                code: -1,
+                                userInfo: [
+                                    NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot"
+                                ]
+                            )
+                            error?.pointee = customError
                             return nil
+
                         }
 //                    }
                     
@@ -545,8 +584,18 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                             DispatchQueue.main.async {
                                 let vW = Utility.displaySwiftAlert("", "Not enough return seats", type: SwiftAlertType.error.rawValue)
                                 SwiftMessages.show(view: vW)
+                               
                             }
+                            let customError = NSError(
+                                domain: "AppErrorDomain",
+                                code: -1,
+                                userInfo: [
+                                    NSLocalizedDescriptionKey: "Unable to retrieve population from snapshot"
+                                ]
+                            )
+                            error?.pointee = customError
                             return nil
+
                         }
 //                    }
                    
@@ -753,7 +802,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
             }
             if let error = error {
                 print(error.localizedDescription)
-            }
+            } else {
             if !self.jsonString.isEmpty {
                 var isDeparting : Bool = true
                 if self.isTicketEdit {
@@ -783,6 +832,7 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                 self.navigationController?.pushViewController(vc, animated: true)
             }
             
+        }
             
         }
         
@@ -1277,6 +1327,8 @@ class AgentBookingVC: UIViewController , UITextFieldDelegate , TimeSelectedDeleg
                                 else {
                                     let vW = Utility.displaySwiftAlert("", "Not enough seats available", type: SwiftAlertType.error.rawValue)
                                     SwiftMessages.show(view: vW)
+                                    
+                                   
                                 }
                             })
                         }
