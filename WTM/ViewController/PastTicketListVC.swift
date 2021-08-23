@@ -761,7 +761,7 @@ class PastTicketListVC: UIViewController , UITableViewDelegate, UITableViewDataS
             vc.startAvailableSeats = 0
             vc.returnAvailableSeats = 0
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "ddMMMYYYY"
+            dateFormatter.dateFormat = "ddMMMyyyy"
             let bookingDate = (data["bookingDate"] as! String)
             print(bookingDate)
             print(dateFormatter.date(from: bookingDate)!)
