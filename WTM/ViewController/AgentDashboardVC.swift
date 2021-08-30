@@ -1335,6 +1335,7 @@ class AgentDashboardVC: UIViewController, UITableViewDelegate, UITableViewDataSo
                     vc.tripReturnTime = selectedFirstStepTime
                     vc.taxiData = taxiData
                     vc.isTicketEdit = false
+                    vc.selectedDate = self.selectedDate
                     vc.isStatTimeSort = self.isStatTimeSort;
                     self.navigationController?.pushViewController(vc, animated: true)
 //                }
